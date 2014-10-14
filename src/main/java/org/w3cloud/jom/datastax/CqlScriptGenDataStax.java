@@ -235,18 +235,15 @@ public class CqlScriptGenDataStax implements CqlScriptGen{
 		if (ifTableExists(session, tableName)){
 			List<String>alterCqls=buildAlterCqls(session, modelClass);
 			for(String alterCql:alterCqls){
-				System.out.println(alterCql);
 				session.execute(alterCql);
 			}
 		}else{
 			String cql=buildCreateCql(modelClass);
-			System.out.println(cql);
 			session.execute(cql);
 		}
 		List<String> indexCqls=buildIndexCqls(modelClass);
 		for(String indexCql:indexCqls){
 			try{
-				System.out.println(indexCql);
 				session.execute(indexCql);
 			}catch ( InvalidQueryException iqe){
 				//ignore iqe (already exists) exception

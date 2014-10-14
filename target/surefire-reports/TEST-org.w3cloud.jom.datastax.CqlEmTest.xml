@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="8" failures="0" name="org.w3cloud.jom.datastax.CqlEmTest" time="0.185" errors="0" skipped="0">
+<testsuite tests="8" failures="0" name="org.w3cloud.jom.datastax.CqlEmTest" time="0.144" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_11\jre\bin"/>
@@ -14,9 +14,8 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value=""/>
-    <property name="test" value="CqlEmTest"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="C:\Users\Subha\projects\subha-branch\trunk\cassandra-jom"/>
+    <property name="user.dir" value="C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom"/>
     <property name="java.runtime.version" value="1.8.0_11-b12"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_11\jre\lib\endorsed"/>
@@ -29,7 +28,7 @@
     <property name="os.name" value="Windows 8.1"/>
     <property name="classworlds.conf" value="C:\Users\Public\apps\apache-maven-3.2.3\bin\..\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_11\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Java\jdk1.8.0_11\bin;C:\Users\Public\apps\scripts;C:\Users\Public\apps\apache-maven-3.2.3\bin;C:\Program Files\DataStax Community\apache-cassandra\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Bazaar;C:\Users\Public\apps\activator-1.2.3-minimal;;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_11\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Java\jdk1.8.0_11\bin;C:\Users\Public\apps\scripts;C:\Users\Public\apps\apache-maven-3.2.3\bin;C:\Program Files\DataStax Community\apache-cassandra\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Bazaar;C:\Users\Public\apps\activator-1.2.3-minimal;;C:\Program Files (x86)\GNU\GnuPG\pub;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -44,7 +43,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_11\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=CqlEmTest test"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher package"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -64,11 +63,11 @@
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
   <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIfTableExists" time="0.005"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdateEnc1" time="0.105"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdate1" time="0.02"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsertEnc1" time="0.022"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdateEnc1" time="0.071"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdate1" time="0.019"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsertEnc1" time="0.02"/>
   <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsertEnc2" time="0.01"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIfColumnExists" time="0.005"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert1" time="0.008"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert2" time="0.01"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIfColumnExists" time="0.004"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert1" time="0.007"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert2" time="0.008"/>
 </testsuite>

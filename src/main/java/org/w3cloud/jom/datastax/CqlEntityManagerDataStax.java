@@ -246,7 +246,6 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 				field.set(entity, value);
 			}else{
 				String setterName="set"+field.getName().substring(0, 1).toUpperCase()+field.getName().substring(1);
-				System.out.println(setterName);
 				Method m=entity.getClass().getMethod(setterName, field.getType());
 				m.invoke(entity, value);
 		}
@@ -262,7 +261,6 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 				value=field.get(entity);
 			}else{
 				String getterName="get"+field.getName().substring(0, 1).toUpperCase()+field.getName().substring(1);
-				System.out.println(getterName);
 				Method m=entity.getClass().getMethod(getterName);
 				value=m.invoke(entity);
 		}
@@ -294,8 +292,6 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 	@Override
 	public void update(Object entity) {
 		String updateCql=buildUpdateCql(entity.getClass());
-		System.out.println("@@@@@UpdateCQL:");
-		System.out.println(updateCql);
 		PreparedStatement statement = session.prepare(updateCql);
 		BoundStatement boundStatement = new BoundStatement(statement);
 		List<Object> objList=new ArrayList<Object>();
