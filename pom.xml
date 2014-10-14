@@ -1,12 +1,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.w3cloud</groupId>
+  <groupId>org.w3cloud.api</groupId>
   <artifactId>cassandra-jom</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
-  <name>cassandra-jom</name>
+  <name>${project.groupId}:${project.artifactId}</name>
   <url>http://maven.apache.org</url>
+  <licenses>
+  <license>
+    <name>The Apache License, Version 2.0</name>
+    <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+  </license>
+</licenses>
+ <developers>
+    <developer>
+      <name>Karthik Sankar</name>
+      <email>karthik.sankar@gmail.com</email>
+      <organization>W3Cloud</organization>
+      <organizationUrl>http://www.w3cloud.org</organizationUrl>
+    </developer>
+  </developers>
+<scm>
+  <connection>scm:git:git@github.com:w3cloud/cassandra-jom.git</connection>
+  <developerConnection>scm:git:git@github.com:w3cloud/cassandra-jom.git</developerConnection>
+  <url>git@github.com:w3cloud/cassandra-jom.git</url>
+</scm>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
