@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.w3cloud</groupId>
-  <artifactId>cassandra-orm</artifactId>
+  <artifactId>cassandra-jom</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
-  <name>cassandra-orm</name>
+  <name>cassandra-jom</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
