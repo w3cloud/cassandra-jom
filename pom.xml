@@ -4,7 +4,7 @@
   <groupId>org.w3cloud</groupId>
   <artifactId>cassandra-orm</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>cassandra-orm</name>
   <url>http://maven.apache.org</url>
   <dependencies>
