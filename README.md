@@ -17,7 +17,7 @@ cassandra-jom
     <dependency>
       <groupId>org.w3cloud.api</groupId>
       <artifactId>cassandra-jom</artifactId>
-      <version>1.0</version>
+      <version>1.0.1</version>
     </dependency>
     
     If cassandra-jom is not resolved, add sonatype repo to your pom.xml
@@ -75,8 +75,7 @@ Insert, update and find your entity
 			em.insert(carModel);
 			carModel.setModelName("Cx5");
 			em.update(carModel);
-			List<CarModel> carModels=em.findAll(carModel.class,"where model_year=?" , 100, 2015);
-			// The thrid parameter 100 is the max limit to be returned
+			List<CarModel> carModels=em.findAll(carModel.class,"where model_year=?" , 2015);
 
 </pre>
 <p>For more complex usage, look into my testcases</p>
