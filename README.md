@@ -75,7 +75,8 @@ Insert, update and find your entity
 			em.insert(carModel);
 			carModel.setModelName("Cx5");
 			em.update(carModel);
-			List<CarModel> carModels=em.findAll(carModel.class,"where model_year=?" , 2015);
+			List<CarModel> carModels=em.findAll(carModel.class,"where model_year=?" , 100, 2015);
+			// The thrid parameter 100 is the max limit to be returned
 
 </pre>
 <p>For more complex usage, look into my testcases</p>
