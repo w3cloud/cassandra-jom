@@ -4,7 +4,7 @@
   <groupId>org.w3cloud.api</groupId>
   <artifactId>cassandra-jom</artifactId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>1.0.1</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <url>http://maven.apache.org</url>
   <licenses>
@@ -54,4 +54,5 @@
     <version>0.9.9</version>
 </dependency>  		
 </dependencies>
+  <description>Simple Cassandra Java Object Mapper. Internally, it uses DataStax java cql driver</description>
 </project>

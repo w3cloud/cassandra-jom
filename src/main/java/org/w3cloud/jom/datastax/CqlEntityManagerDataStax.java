@@ -387,11 +387,10 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		return entity;
 	}
 	@Override
-	public <T> List<T> findAll(Class<T> modelClass, String where, int limit,
-			Object... bindParams) {
+	public <T> List<T> findAll(Class<T> modelClass, String where, Object... bindParams) {
 		List<T> entities=new ArrayList<T>();
 		try {
-			String cql=buildSelectCql(modelClass)+where+" LIMIT "+limit;
+			String cql=buildSelectCql(modelClass)+where;
 			PreparedStatement statement = session.prepare(cql);
 			BoundStatement boundStatement = new BoundStatement(statement);
 			boundStatement.bind(bindParams);
