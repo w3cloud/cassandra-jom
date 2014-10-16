@@ -19,6 +19,17 @@ cassandra-jom
       <artifactId>cassandra-jom</artifactId>
       <version>1.0</version>
     </dependency>
+    
+    If cassandra-jom is not resolved, add sonatype repo to your pom.xml
+    
+      <repositories>
+    <repository>
+      <id>sonatype-repo</id>
+      <name>Sonatype</name>
+      <url>https://oss.sonatype.org/content/repositories/releases</url>
+    </repository>
+  </repositories>
+    
 <h5>Your entity object<h5>
 <pre>
 package org.w3cloud.jom.testmodels;
