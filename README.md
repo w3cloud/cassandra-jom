@@ -46,7 +46,7 @@ public class CarModel {
 	@CqlAutoGen
 	private UUID id;
 	private String make;
-  private Strign modelName;
+  	private String modelName;
   @CqlIndex
   private int modelYear;
 	public UUID getId(){
@@ -77,6 +77,10 @@ Insert, update and find your entity
 			carModel.setModelName("Cx5");
 			em.update(carModel);
 			List<CarModel>carModels=em.findAll(CqlBuilder.select(CarModel.class).field("modelYear").eq(2015);
+			//Update only one coloumn; Use this approach only if you are sure about the modified coloumns
+			carModel.setModelName("6");
+			em.updateColumn(carModel, CqlBuilder.update(AuditLog.class).field("modelName").set(carModel.setModelName()));
+			
 
 </pre>
 <p>For more complex usage, look into my testcases</p>
