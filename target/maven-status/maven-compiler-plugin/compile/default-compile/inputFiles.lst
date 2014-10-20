@@ -1,11 +1,15 @@
+C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\CqlBuilder.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\annotations\CqlAutoGen.java
+C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\CqlDeleteStatement.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\util\UUIDUtil.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\annotations\CqlStoreAsJson.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\annotations\CqlId.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\CqlEntityManagerFactory.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\CqlEntityManager.java
+C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\CqlFilter.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\annotations\CqlEmbed.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\annotations\CqlTransient.java
+C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\CqlStatement.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\CqlScriptGenFactory.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\datastax\CqlScriptGenDataStax.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\java\org\w3cloud\jom\annotations\CqlIndex.java

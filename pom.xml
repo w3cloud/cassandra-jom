@@ -4,7 +4,7 @@
   <groupId>org.w3cloud.api</groupId>
   <artifactId>cassandra-jom</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1</version>
+  <version>1.2.1</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <url>http://maven.apache.org</url>
   <licenses>

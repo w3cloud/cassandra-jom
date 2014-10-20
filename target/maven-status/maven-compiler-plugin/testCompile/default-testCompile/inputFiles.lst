@@ -3,10 +3,10 @@ C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\or
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\AuditLogEnc.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\OptionResponseEnc.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\AutoGenUuidTestEnc.java
+C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\CqlStatementTest.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\OrderItem.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\AllTypesModelEnc.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\StoreAsJsonTestEnc.java
-C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\datastax\CqlEmDemoTest.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\DateWithTimeZone.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\TestModel1.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\Option.java
@@ -18,7 +18,6 @@ C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\or
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\OptionEnc.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\datastax\CqlEmTest.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\StoreAsJsonTest.java
-C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\CreateCqlTest.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\AuditLog.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\CustOrderEnc.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\DateWithTimeZoneEnc.java

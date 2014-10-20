@@ -1,17 +1,21 @@
 package org.w3cloud.jom.datastax;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.w3cloud.jom.CqlBuilder;
 import org.w3cloud.jom.CqlEntityManager;
 import org.w3cloud.jom.CqlEntityManagerFactory;
+import org.w3cloud.jom.CqlFilter;
 import org.w3cloud.jom.datastax.CqlEntityManagerDataStax;
 import org.w3cloud.jom.datastax.CqlScriptGenDataStax;
 import org.w3cloud.jom.testmodels.AuditLog;
@@ -62,7 +66,6 @@ public class CqlEmTest {
 				cluster.close();
 		}
 
-		System.out.println("setting up");
 	}
 
 	@AfterClass
@@ -78,8 +81,6 @@ public class CqlEmTest {
 			if (cluster!=null)
 				cluster.close();
 		}
-
-		System.out.println("tearing down");
 	}
 
 	
@@ -96,11 +97,9 @@ public class CqlEmTest {
 		em.insert(e);
 		assertTrue(e.id!=null);
 		assertTrue(e.id.toString().length()>5);
-		CqlEntityManagerDataStax emDataStax=(CqlEntityManagerDataStax)em;
-		   Statement select = QueryBuilder.select().all().from("jom_test", "audit_log")
-	                .where(QueryBuilder.eq("restaurant_id", e.restaurantId)).and(QueryBuilder.eq("id", e.id));
-		   ResultSet rs=emDataStax.session.execute(select);
-		 assertTrue(rs.all().size()==1);
+		AuditLog al=em.findOne(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId));
+		assertNotNull(al);
+		assertNotNull(al.createDt);
 	}
 	@Test
 	public void testInsertEnc1() {
@@ -284,11 +283,10 @@ public class CqlEmTest {
 		e.code="B1";
 		em.update(e);
 		
-		StoreAsJsonTest e2=em.findOne(StoreAsJsonTest.class,"where restaurant_id=? and cat_id=? and id=?" , e.restaurantId, e.catId,  e.id);
-		
+		StoreAsJsonTest e2=em.findOne(CqlBuilder.select(StoreAsJsonTest.class).field("restaurantId").eq(e.restaurantId).field("catId").eq(e.catId).field("id").eq(e.id));
+
 		Gson gson=new Gson();
 		String e2str=gson.toJson(e2.options);
-		System.out.println(e2str);
 		
 	}
 	@Test
@@ -343,25 +341,111 @@ public class CqlEmTest {
 		e.getOptions().remove(0);
 		e.setCode("B1");
 		em.update(e);
-		
-		StoreAsJsonTestEnc e2=em.findOne(StoreAsJsonTestEnc.class,"where restaurant_id=? and cat_id=? and id=?" , e.getRestaurantId(), e.getCatId(),  e.getId());
+		StoreAsJsonTestEnc e2=em.findOne(CqlBuilder.select(StoreAsJsonTestEnc.class).field("restaurantId").eq(e.getRestaurantId()).field("catId").eq(e.getCatId()).field("id").eq(e.getId()));
 		Gson gson=new Gson();
 		String e2str=gson.toJson(e2.getOptions());
-		System.out.println(e2str);
 	}
 
 	@Test
 	public void testIfTableExists() {
-		CqlEntityManagerDataStax em=(CqlEntityManagerDataStax)this.em;
+		CqlEntityManagerDataStax em=(CqlEntityManagerDataStax)CqlEmTest.em;
 		CqlScriptGenDataStax gen=new CqlScriptGenDataStax();
 		assertTrue(gen.ifTableExists(em.session,"audit_log")); 
 		assertTrue(gen.ifTableExists(em.session,"audit_log2")==false);
 	}
 	@Test
 	public void testIfColumnExists() {
-		CqlEntityManagerDataStax em=(CqlEntityManagerDataStax)this.em;
+		CqlEntityManagerDataStax em=(CqlEntityManagerDataStax)CqlEmTest.em;
 		CqlScriptGenDataStax gen=new CqlScriptGenDataStax();
 		assertTrue(gen.ifColumnExists(em.session,"audit_log", "id")); 
 		assertTrue(gen.ifColumnExists(em.session,"audit_log", "id2")==false);
 	}
+	private static UUID restaurantId1=UUID.fromString("1fba8172-52f1-11e4-82f4-e811328fecf4");
+	private static UUID employeeId1=UUID.fromString("b8d37e30-53bd-11e4-b43f-e811328fecf4");
+
+	@Test
+	public void testIssue1() {
+		AuditLog e=new AuditLog();
+		e.restaurantId=restaurantId1;
+		e.employeeId=employeeId1;
+		e.setAction("TestAction");
+		e.details="InsertCqlTest";
+		em.insert(e);
+		assertTrue(e.id!=null);
+		assertTrue(e.id.toString().length()>5);
+		AuditLog al=em.findOne(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId));
+		assertNotNull(al);
+		assertNull(al.createDt);
+	}
+	public AuditLog createAuditLog(String details) {
+		AuditLog e=new AuditLog();
+		e.restaurantId=restaurantId1;
+		e.employeeId=employeeId1;
+		e.setAction("TestAction");
+		e.details=details;
+		em.insert(e);
+		assertTrue(e.id!=null);
+		assertTrue(e.id.toString().length()>5);
+		return e;
+	}
+	public AuditLog createAuditLog(){
+		return createAuditLog("InsertCqlTest");
+	}
+
+	@Test
+	public void testStatementFindOne() {
+		AuditLog e=createAuditLog();
+		AuditLog al=em.findOne(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId));
+		assertNotNull(al);
+	}
+
+	@Test
+	public void testStatementFindAll() {
+		AuditLog e=createAuditLog();
+		List<AuditLog> als=em.findAll(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId));
+		assertNotNull(als);
+		assertTrue("Expected:>1; Actual:"+als.size(),als.size()>0);
+	}
+	@Test
+	public void testStatementFindAllWithFilter() {
+		final String details="WithFilterTest";
+		AuditLog e=createAuditLog(details);
+		List<AuditLog> als=em.findAll(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId),
+			new CqlFilter<AuditLog>(){
+				@Override
+				public boolean allowThisEntity(AuditLog entity) {
+					return entity.details.equals(details);
+				}
+			
+		}
+				);
+		assertNotNull(als);
+		assertTrue("Expected:1; Actual:"+als.size(),als.size()==1);
+		AuditLog al=als.get(0);
+		assertTrue("Expected Details:"+details+"\nActual:"+al.details, al.details.equals(details));
+	}
+	@Test
+	public void testStatementUpdate() {
+		String updatedDetails="UpdatedToThisValue";
+		AuditLog e=createAuditLog();
+		em.updateColumn(e, CqlBuilder.update(AuditLog.class).field("details").set(updatedDetails));
+		List<AuditLog> als=em.findAll(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId).field("id").eq(e.id));
+		assertNotNull(als);
+		assertTrue(als.size()==1);
+		AuditLog al=als.get(0);
+		assertTrue(al.details.equals(updatedDetails));
+	}
+	@Test
+	public void testStatementDelete() {
+		AuditLog e=createAuditLog("DeleteCqlTest");
+		AuditLog al;
+		al=em.findOne(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId).field("id").eq(e.id));
+		assertNotNull(al);
+		em.delete(e);
+		al=em.findOne(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId).field("id").eq(e.id));
+		assertNull(al);
+		
+	}
+
+
 }

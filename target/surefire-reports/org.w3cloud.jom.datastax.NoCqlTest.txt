@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: org.w3cloud.jom.datastax.NoCqlTest
 -------------------------------------------------------------------------------
-Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.921 sec
+Tests run: 24, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.939 sec

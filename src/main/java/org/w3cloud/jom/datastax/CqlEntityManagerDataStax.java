@@ -6,10 +6,11 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
 import org.w3cloud.jom.CqlEntityManager;
+import org.w3cloud.jom.CqlFilter;
 import org.w3cloud.jom.CqlScriptGen;
 import org.w3cloud.jom.CqlScriptGenFactory;
+import org.w3cloud.jom.CqlStatement;
 import org.w3cloud.jom.annotations.CqlAutoGen;
 import org.w3cloud.jom.annotations.CqlEmbed;
 import org.w3cloud.jom.annotations.CqlId;
@@ -193,12 +194,22 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		cql.setLength(cql.length()-4); //Trim the last ","
 		return cql.toString();
 	}
+	protected String buildDeleteCql(Class<?> modelClass){
+		StringBuilder cql=new StringBuilder();
+		cql.append("DELETE FROM ");
+		cql.append(camelCaseToUnderScore(modelClass.getSimpleName()));
+		Field[] fields=modelClass.getDeclaredFields();
+		cql.append(" WHERE ");
+		buildUpdateWhereList(fields, cql);
+		cql.setLength(cql.length()-4); //Trim the last ","
+		return cql.toString();
+	}
+
 	protected enum BindOption{
 		allFields, onlyIdFields, exceptIdFields 
 	};
 
-	protected void bindFields(Object entity, List<Object> objList, BindOption bindOption){
-		Field[] fields=entity.getClass().getDeclaredFields();
+	protected void bindFields(Field[] fields, Object entity, List<Object> objList, BindOption bindOption){
 		for(Field field:fields){
 			if ( (bindOption==BindOption.exceptIdFields)&&
 					(field.getAnnotation(CqlId.class)!=null)){
@@ -212,7 +223,10 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 			// if it is a NoSqlTransient field do nothing
 			if (isStoredField(field)){
 				if (field.getAnnotation(CqlEmbed.class)!=null){
-					bindFields(getField(field, entity), objList, bindOption);
+					
+					bindFields(field.getType().getDeclaredFields(), getField(field, entity), objList, bindOption);
+				}else if (entity==null){
+					objList.add(null);
 				}else if (field.getAnnotation(CqlStoreAsJson.class)!=null){
 					Object value=getField(field, entity);
 					if (value!=null){
@@ -236,11 +250,13 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		BoundStatement boundStatement = new BoundStatement(statement);
 		List<Object> objList=new ArrayList<Object>();
 		autoGenUUID(entity);
-		bindFields(entity, objList, BindOption.allFields);
+		bindFields(entity.getClass().getDeclaredFields(), entity, objList, BindOption.allFields);
 		boundStatement.bind(objList.toArray());
 		session.execute(boundStatement);
 	}
-	protected void setField(Field field, Object entity, Object value){
+	
+	protected void setField(Field field, Object entity, Object 
+			value){
 		try{
 			if (Modifier.isPublic(field.getModifiers())){
 				field.set(entity, value);
@@ -295,11 +311,28 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		PreparedStatement statement = session.prepare(updateCql);
 		BoundStatement boundStatement = new BoundStatement(statement);
 		List<Object> objList=new ArrayList<Object>();
- 		bindFields(entity, objList, BindOption.exceptIdFields);
- 		bindFields(entity, objList, BindOption.onlyIdFields);
+		Field[] fields=entity.getClass().getDeclaredFields();
+ 		bindFields(fields, entity, objList, BindOption.exceptIdFields);
+ 		bindFields(fields,entity, objList, BindOption.onlyIdFields);
 		boundStatement.bind(objList.toArray());
 		
 	}
+	@Override
+	public <T> void updateColumn(T entity, CqlStatement<T> cqlStatement) {
+		StringBuilder cql=new StringBuilder();
+		List<Object>bindParams=new ArrayList<Object>();
+		cqlStatement.buildUpdateCql(cql, bindParams);
+		cql.append(" WHERE ");
+		Field[] fields=entity.getClass().getDeclaredFields();
+		buildUpdateWhereList(fields, cql);
+		cql.setLength(cql.length()-4); //Trim the last ","
+ 		bindFields(fields,entity, bindParams, BindOption.onlyIdFields);
+		PreparedStatement statement = session.prepare(cql.toString());
+		BoundStatement boundStatement = new BoundStatement(statement);
+		boundStatement.bind(bindParams.toArray());
+		session.execute(boundStatement);
+	}
+
 	protected String buildSelectCql(Class<?> modelClass){
 		StringBuilder cql=new StringBuilder();
 		cql.append("SELECT * FROM ");
@@ -307,7 +340,7 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		cql.append(" ");
 		return cql.toString();
 	}
-	protected void setFieldFromRow(Object entity, String prefix, Field field, Row row ){
+	protected Object getFieldFromRow(String prefix, Field field, Row row ){
 		String cqlName;
 		if (prefix!=null){
 			cqlName=prefix+"__"+camelCaseToUnderScore(field.getName());
@@ -340,22 +373,38 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 			String jsonStr=row.getString(cqlName+"__json");
 			value=gson.fromJson(jsonStr, field.getType());
 		}
-		setField(field, entity, value);
+		//setField(field, entity, value);
+		return value;
 		
 	}
-	protected void setEntityFromRow(Object entity, String prefix, Row row){
+	protected <T>T getEntityFromRow(Class<T> entClass, String prefix, Row row){
+		T entity=null;
 		try{
-		Field[] fields=entity.getClass().getDeclaredFields();
+		Field[] fields=entClass.getDeclaredFields();
 		for(Field field:fields){
 			// if it is a NoSqlTransient field do nothing
 			if (isStoredField(field))
 			{
 				if (field.getAnnotation(CqlEmbed.class)!=null){
 					String cqlFieldName=camelCaseToUnderScore(field.getName());
-					Object embededEntity=field.getType().newInstance();
-					setEntityFromRow(embededEntity,cqlFieldName, row);
+					Object embededEntity=getEntityFromRow(field.getType(), cqlFieldName, row);
+					if (embededEntity!=null){
+						if (entity==null){
+							entity=entClass.newInstance();
+						}
+						setField(field, entity, embededEntity);
+					}
+					setField(field, entity, embededEntity);
 				}else {
-					setFieldFromRow(entity, prefix, field, row);
+					Object value=getFieldFromRow(prefix, field, row);
+					if (value!=null){
+						if (entity==null){
+							entity=entClass.newInstance();
+						}
+						setField(field, entity, value);
+					}
+						
+					
 				}
 			}
 		}
@@ -364,46 +413,103 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 			throw new RuntimeException("Exceptionin setEntityFromRow", e);
 			
 		}
+		return entity;
 		
 		
 	}
+//	@Override
+//	public <T> T findOne(Class<T> modelClass, String where, Object... bindParams) {
+//		T entity=null;
+//		try {
+//			String cql=buildSelectCql(modelClass)+where;
+//			PreparedStatement statement = session.prepare(cql);
+//			BoundStatement boundStatement = new BoundStatement(statement);
+//			boundStatement.bind(bindParams);
+//			Row row=session.execute(boundStatement).one();
+//			if (row!=null){
+//				entity=getEntityFromRow(modelClass, null, row);
+//			}
+//			
+//		} catch (Throwable e) {
+//			throw new RuntimeException("Error in findOne", e);
+//		} 
+//		return entity;
+//	}
+//	@Override
+//	public <T> List<T> findAll(Class<T> modelClass, String where, Object... bindParams) {
+//		List<T> entities=new ArrayList<T>();
+//		try {
+//			String cql=buildSelectCql(modelClass)+where;
+//			PreparedStatement statement = session.prepare(cql);
+//			BoundStatement boundStatement = new BoundStatement(statement);
+//			boundStatement.bind(bindParams);
+//			List<Row> rows=session.execute(boundStatement).all();
+//			for(Row row:rows){
+//				T entity=getEntityFromRow(modelClass, null, row);
+//				entities.add(entity);
+//			}
+//			
+//		} catch (Throwable e) {
+//			throw new RuntimeException("Error in findOne", e);
+//		} 
+//		return entities;
+//	}
 	@Override
-	public <T> T findOne(Class<T> modelClass, String where, Object... bindParams) {
+	public <T> T findOne(CqlStatement<T> cqlSatement) {
 		T entity=null;
-		try {
-			String cql=buildSelectCql(modelClass)+where;
-			PreparedStatement statement = session.prepare(cql);
-			BoundStatement boundStatement = new BoundStatement(statement);
-			boundStatement.bind(bindParams);
-			Row row=session.execute(boundStatement).one();
-			if (row!=null){
-				entity= modelClass.newInstance();
-				setEntityFromRow(entity, null, row);
-			}
-			
-		} catch (Throwable e) {
-			throw new RuntimeException("Error in findOne", e);
-		} 
+
+		StringBuilder cql=new StringBuilder();
+		List<Object>bindParams=new ArrayList<Object>();
+		cqlSatement.buildSelectCql(cql, bindParams);
+
+		PreparedStatement statement = session.prepare(cql.toString());
+		BoundStatement boundStatement = new BoundStatement(statement);
+		boundStatement.bind(bindParams.toArray());
+		Row row=session.execute(boundStatement).one();
+		if (row!=null){
+			entity=getEntityFromRow(cqlSatement.getEntityClass(), null, row);
+		}
+
 		return entity;
 	}
 	@Override
-	public <T> List<T> findAll(Class<T> modelClass, String where, Object... bindParams) {
+	public <T> List<T> findAll(CqlStatement<T> cqlStatement) {
+		return findAll(cqlStatement, null);
+	}
+
+	@Override
+	public <T> List<T> findAll(CqlStatement<T> cqlStatement, CqlFilter<T> filter) {
 		List<T> entities=new ArrayList<T>();
 		try {
-			String cql=buildSelectCql(modelClass)+where;
-			PreparedStatement statement = session.prepare(cql);
+			StringBuilder cql=new StringBuilder();
+			List<Object>bindParams=new ArrayList<Object>();
+			cqlStatement.buildSelectCql(cql, bindParams);
+			PreparedStatement statement = session.prepare(cql.toString());
 			BoundStatement boundStatement = new BoundStatement(statement);
-			boundStatement.bind(bindParams);
+			boundStatement.bind(bindParams.toArray());
 			List<Row> rows=session.execute(boundStatement).all();
 			for(Row row:rows){
-				T entity= modelClass.newInstance();
-				setEntityFromRow(entity, null, row);
-				entities.add(entity);
+				T entity=getEntityFromRow(cqlStatement.getEntityClass(), null, row);
+				if (filter==null){
+					entities.add(entity);
+				} else if ((filter.allowThisEntity(entity))){
+					entities.add(entity);
+				}
 			}
-			
-		} catch (Throwable e) {
+ 		} catch (Throwable e) {
 			throw new RuntimeException("Error in findOne", e);
-		} 
+		}
 		return entities;
+	}
+	@Override
+	public void delete(Object entity) {
+		String deleteCql=buildDeleteCql(entity.getClass());
+		Field[] fields=entity.getClass().getDeclaredFields();
+		List<Object> bindParams=new ArrayList<Object>();
+ 		bindFields(fields,entity, bindParams, BindOption.onlyIdFields);
+		PreparedStatement statement = session.prepare(deleteCql);
+		BoundStatement boundStatement = new BoundStatement(statement);
+		boundStatement.bind(bindParams.toArray());
+		session.execute(boundStatement);
 	}
 }

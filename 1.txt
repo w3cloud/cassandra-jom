@@ -1,0 +1,50 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building org.w3cloud.api:cassandra-jom 1.0.1
+[INFO] ------------------------------------------------------------------------
+Downloading: https://repo.maven.apache.org/maven2/com/eaio/uuid/uuid/3.4/uuid-3.4.pom
+[WARNING] The POM for com.eaio.uuid:uuid:jar:3.4 is missing, no dependency information available
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ cassandra-jom ---
+[WARNING] Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\main\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ cassandra-jom ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ cassandra-jom ---
+[WARNING] Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ cassandra-jom ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ cassandra-jom ---
+[INFO] Surefire report directory: C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.w3cloud.jom.datastax.CqlEmTest
+setting up
+[{"id":"soup","name":"Soup","optType":"Single","responses":[{"respText":"Veg","extraCost":1.75,"selected":false},{"respText":"Chickem","extraCost":1.5,"selected":false}]},{"id":"salad","name":"Salad","optType":"Single","responses":[{"respText":"Veg","extraCost":1.75,"selected":false},{"respText":"Chickem","extraCost":1.5,"selected":false}]}]
+[{"id":"soup","name":"Soup","optType":"Single","responses":[{"respText":"Veg","extraCost":1.75,"selected":false},{"respText":"Chickem","extraCost":1.5,"selected":false}]},{"id":"salad","name":"Salad","optType":"Single","responses":[{"respText":"Veg","extraCost":1.75,"selected":false},{"respText":"Chickem","extraCost":1.5,"selected":false}]}]
+FindStmtOne:
+SELECT * FROM audit_log WHERE restaurant_id =  ?  AND employee_id =  ? End
+Param:465056b0-5847-11e4-9d63-e811328fecf4
+Param:465056b1-5847-11e4-9d63-e811328fecf4
+tearing down
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.386 sec
+
+Results :
+
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 23.877 s
+[INFO] Finished at: 2014-10-20T06:53:14-04:00
+[INFO] Final Memory: 9M/65M
+[INFO] ------------------------------------------------------------------------

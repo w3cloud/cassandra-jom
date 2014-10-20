@@ -22,10 +22,10 @@ public class AuditLog {
 	@CqlId
 	public UUID restaurantId;
 	@CqlId
+	public UUID employeeId;
+	@CqlId
 	@CqlAutoGen
 	public UUID id;
-	@CqlIndex
-	public UUID employeeId; 
 	
 	private static String someStatic;
 	public static String getSomeStatic() {
@@ -40,7 +40,8 @@ public class AuditLog {
 		return (id==null)?"":id.toString();
 	}
 	public void setIdStr(String idStr){}
-	private String action;
+	@CqlIndex
+	private String action;//In real world it is a bad index example
 	public String getAction() {
 		return action;
 	}

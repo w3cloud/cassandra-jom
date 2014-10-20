@@ -29,7 +29,6 @@ public class NoCqlTest {
 		assertTrue(em.camelCaseToUnderScore("CData").equals("cdata"));
 		assertTrue(em.camelCaseToUnderScore("CData_model").equals("cdata_model"));
 		assertTrue(em.camelCaseToUnderScore("CarModelMake").equals("car_model_make"));
-		System.out.println(em.camelCaseToUnderScore("CarIDModel"));
 		assertTrue(em.camelCaseToUnderScore("CarIDModel").equals("car_idmodel"));
 
 	}
@@ -115,9 +114,9 @@ public class NoCqlTest {
 			Class<?>testClass=org.w3cloud.jom.testmodels.AuditLog.class;
 			StringBuilder cql=new StringBuilder();
 			em.buildFieldList(testClass.getDeclaredFields(), null, cql);
-			System.out.println(cql.toString());
-			String expected="restaurant_id, id, employee_id, action, details, create_dt__d, create_dt__z, ";
-			assertTrue(cql.toString().equals(expected));
+			String expected="restaurant_id, employee_id, id, action, details, create_dt__d, create_dt__z, ";
+			assertTrue("Expected:\n"+expected+"End\nActual:\n"+cql.toString()+"END", cql.toString().equals(expected));
+			
 		}catch(RuntimeException ex){
 			fail(ex.getMessage());
 		}
@@ -129,7 +128,6 @@ public class NoCqlTest {
 			Class<?>testClass=org.w3cloud.jom.testmodels.AuditLogEnc.class;
 			StringBuilder cql=new StringBuilder();
 			em.buildFieldList(testClass.getDeclaredFields(), null, cql);
-			System.out.println(cql.toString());
 			String expected="restaurant_id, id, employee_id, action, details, create_dt__d, create_dt__z, ";
 			assertTrue(cql.toString().equals(expected));
 		}catch(RuntimeException ex){
@@ -144,7 +142,6 @@ public class NoCqlTest {
 			Class<?>testClass=org.w3cloud.jom.testmodels.CustOrder.class;
 			StringBuilder cql=new StringBuilder();
 			em.buildFieldList(testClass.getDeclaredFields(), null, cql);
-			System.out.println(cql.toString());
 			String expected="restaurant_id, id, user_id, order_no, order_type, furture_order_dt__d, furture_order_dt__z, payment_type, estimated_time, order_items__json, order_total, delivery_fee, coupon_code, discount, tip, tax_percent, tax, total, name, phone, send_text_msg, create_dt__d, create_dt__z, status, cancel_reason, db_status, transaction_id, ";
 			assertTrue(cql.toString().equals(expected));
 		}catch(RuntimeException ex){
@@ -158,7 +155,6 @@ public class NoCqlTest {
 			Class<?>testClass=org.w3cloud.jom.testmodels.CustOrderEnc.class;
 			StringBuilder cql=new StringBuilder();
 			em.buildFieldList(testClass.getDeclaredFields(), null, cql);
-			System.out.println(cql.toString());
 			String expected="restaurant_id, id, user_id, order_no, order_type, furture_order_dt__d, furture_order_dt__z, payment_type, estimated_time, order_items__json, order_total, delivery_fee, coupon_code, discount, tip, tax_percent, tax, total, name, phone, send_text_msg, create_dt__d, create_dt__z, status, cancel_reason, db_status, transaction_id, ";
 			assertTrue(cql.toString().equals(expected));
 		}catch(RuntimeException ex){
@@ -203,10 +199,8 @@ public class NoCqlTest {
 			Class<?> modelClass=AuditLog.class;
 			StringBuilder cql=new StringBuilder();
 			em.buildUpdateSetList(modelClass.getDeclaredFields(), null, cql);
-			System.out.println(cql.toString());
-			String expected="employee_id=?, action=?, details=?, create_dt__d=?, create_dt__z=?, ";
-			assertTrue(cql.toString().equals(expected));
-			
+			String expected="action=?, details=?, create_dt__d=?, create_dt__z=?, ";
+			assertTrue("Expected:\n"+expected+"End\nActual:\n"+cql.toString()+"END", cql.toString().equals(expected));
 			
 		}catch(RuntimeException ex){
 			fail(ex.getMessage());
@@ -219,7 +213,6 @@ public class NoCqlTest {
 			Class<?> modelClass=AuditLogEnc.class;
 			StringBuilder cql=new StringBuilder();
 			em.buildUpdateSetList(modelClass.getDeclaredFields(), null, cql);
-			System.out.println(cql.toString());
 			String expected="employee_id=?, action=?, details=?, create_dt__d=?, create_dt__z=?, ";
 			assertTrue(cql.toString().equals(expected));
 			
@@ -236,9 +229,8 @@ public class NoCqlTest {
 			Class<?> modelClass=AuditLog.class;
 			StringBuilder cql=new StringBuilder();
 			em.buildUpdateWhereList(modelClass.getDeclaredFields(), cql);
-			System.out.println(cql.toString());
-			String expected="restaurant_id=? AND id=? AND ";
-			assertTrue(cql.toString().equals(expected));
+			String expected="restaurant_id=? AND employee_id=? AND id=? AND ";
+			assertTrue("Expected:\n"+expected+"End\nActual:\n"+cql.toString()+"END", cql.toString().equals(expected));
 		}catch(RuntimeException ex){
 			fail(ex.getMessage());
 		}
@@ -250,7 +242,6 @@ public class NoCqlTest {
 			Class<?> modelClass=AuditLogEnc.class;
 			StringBuilder cql=new StringBuilder();
 			em.buildUpdateWhereList(modelClass.getDeclaredFields(), cql);
-			System.out.println(cql.toString());
 			String expected="restaurant_id=? AND id=? AND ";
 			assertTrue(cql.toString().equals(expected));
 		}catch(RuntimeException ex){
@@ -264,9 +255,6 @@ public class NoCqlTest {
 			CqlEntityManagerDataStax em=new CqlEntityManagerDataStax();
 			Class<?> modelClass=AuditLog.class;
 			String cql=em.buildUpdateCql(modelClass);
-			System.out.println(cql.toString());
-//			String expected="restaurant_id=? AND id=? AND ";
-//			assertTrue(cql.toString().equals(expected));
 		}catch(RuntimeException ex){
 			fail(ex.getMessage());
 		}
@@ -278,9 +266,6 @@ public class NoCqlTest {
 			CqlEntityManagerDataStax em=new CqlEntityManagerDataStax();
 			Class<?> modelClass=AuditLogEnc.class;
 			String cql=em.buildUpdateCql(modelClass);
-			System.out.println(cql.toString());
-//			String expected="restaurant_id=? AND id=? AND ";
-//			assertTrue(cql.toString().equals(expected));
 		}catch(RuntimeException ex){
 			fail(ex.getMessage());
 		}
@@ -293,9 +278,7 @@ public class NoCqlTest {
 			List<String>indexCqls=gen.buildIndexCqls(AuditLog.class);
 			assertNotNull(indexCqls);
 			assertTrue(indexCqls.size()==1);
-			System.out.println(indexCqls.get(0)+":");
-			System.out.println("CREATE INDEX ON audit_log (employee_id);");
-			assertTrue(indexCqls.get(0).equals("CREATE INDEX ON audit_log (employee_id);"));
+			assertTrue(indexCqls.get(0).equals("CREATE INDEX ON audit_log (action);"));
 			for(String cql:indexCqls){
 				System.out.println(cql);
 			}
@@ -351,8 +334,13 @@ public class NoCqlTest {
 		}
 		
 	}
-	
-
+	@Test
+	public void testBuildDeleteCql() {
+		CqlEntityManagerDataStax em=new CqlEntityManagerDataStax();
+		String cql=em.buildDeleteCql(AuditLog.class);
+		String expected="DELETE FROM audit_log WHERE restaurant_id=? AND employee_id=? AND id=? ";
+		assertTrue("Expected:\n"+expected+"End\nActual:\n"+cql.toString()+"END", cql.toString().equals(expected));
+	}
 	
 	
 }
