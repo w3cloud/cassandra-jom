@@ -83,7 +83,7 @@ Insert, update and find your entity
 			//In cassandra this approach is more effiecient
 			carModel.setModelName("6");
 			em.updateColumn(carModel, CqlBuilder.update(CarModel.class)
-				.field("modelName").set(carModel.setModelName()));
+				.field("modelName").set(carModel.getModelName()));
 			
 
 </pre>
