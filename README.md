@@ -82,7 +82,7 @@ Insert, update and find your entity
 			//you are sure about the modified coloumns. 
 			//In cassandra this approach is more effiecient
 			carModel.setModelName("6");
-			em.updateColumn(carModel, CqlBuilder.update(AuditLog.class)
+			em.updateColumn(carModel, CqlBuilder.update(CarModel.class)
 				.field("modelName").set(carModel.setModelName()));
 			
 
