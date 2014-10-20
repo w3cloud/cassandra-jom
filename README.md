@@ -90,9 +90,8 @@ Insert, update and find your entity
 <p>For more complex usage, look into my testcases</p>
 <h5>Upcoming release</h5>
 <ul>
-<li> Version 1.1.1 scheduled for early November, 2014
-<li> Add delete functionality to the entitymanager
-<li> Expose datastax session for any advanced queries.
-<li> Improve on code doucumenation and javdocs
-<li> Any fixes for bugs that we encounter.
+<li> Current version 1.2.1 is a stable release
+<li> No planned release
+<li> Interface will not be changed
+<li> Only bug fixes, if any will be made
 </ul>
