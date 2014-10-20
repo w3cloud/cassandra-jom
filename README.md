@@ -78,7 +78,9 @@ Insert, update and find your entity
 			em.update(carModel);
 			List<CarModel>carModels=em.findAll(CqlBuilder.select(CarModel.class).
 				field("modelYear").eq(2015);
-			//Update only one coloumn; Use this approach only if you are sure about the modified coloumns
+			//Update only one coloumn; Use this approach only if 
+			//you are sure about the modified coloumns. 
+			//In cassandra this approach is more effiecient
 			carModel.setModelName("6");
 			em.updateColumn(carModel, CqlBuilder.update(AuditLog.class)
 				.field("modelName").set(carModel.setModelName()));
