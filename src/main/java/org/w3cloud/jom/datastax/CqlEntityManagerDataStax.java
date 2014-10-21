@@ -276,12 +276,13 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 			if (Modifier.isPublic(field.getModifiers())){
 				value=field.get(entity);
 			}else{
-				String getterName="get"+field.getName().substring(0, 1).toUpperCase()+field.getName().substring(1);
+				String getterPrefix=(field.getType().getName().equals("boolean"))?"is":"get";
+				String getterName=getterPrefix+field.getName().substring(0, 1).toUpperCase()+field.getName().substring(1);
 				Method m=entity.getClass().getMethod(getterName);
 				value=m.invoke(entity);
 		}
 		}catch (Throwable ex){
-			throw  new RuntimeException("Unable to set field: "+field.getName()+ex.getMessage(), ex);
+			throw  new RuntimeException("Unable to get field: "+field.getName()+ex.getMessage(), ex);
 		}
 		return value;
 		

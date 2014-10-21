@@ -68,20 +68,6 @@ public class NoCqlTest {
 		}
 	}
 	@Test
-	public void testCreateSession2() {
-		try{
-			CqlEntityManagerDataStax em=new CqlEntityManagerDataStax();
-			Properties props=new Properties();
-			props.put("cql.contactpoint", "localhost");
-			props.put("cql.keyspace", "demo");
-			Session session=em.createSession(props);
-			assertTrue(session!=null);
-			session.close();
-		}catch(RuntimeException ex){
-			fail(ex.getMessage());
-		}
-	}
-	@Test
 	public void testCreateSession3() {
 		try{
 			CqlEntityManagerDataStax em=new CqlEntityManagerDataStax();
@@ -128,7 +114,7 @@ public class NoCqlTest {
 			Class<?>testClass=org.w3cloud.jom.testmodels.AuditLogEnc.class;
 			StringBuilder cql=new StringBuilder();
 			em.buildFieldList(testClass.getDeclaredFields(), null, cql);
-			String expected="restaurant_id, id, employee_id, action, details, create_dt__d, create_dt__z, ";
+			String expected="restaurant_id, id, employee_id, action, active, details, create_dt__d, create_dt__z, ";
 			assertTrue(cql.toString().equals(expected));
 		}catch(RuntimeException ex){
 			fail(ex.getMessage());
@@ -213,7 +199,7 @@ public class NoCqlTest {
 			Class<?> modelClass=AuditLogEnc.class;
 			StringBuilder cql=new StringBuilder();
 			em.buildUpdateSetList(modelClass.getDeclaredFields(), null, cql);
-			String expected="employee_id=?, action=?, details=?, create_dt__d=?, create_dt__z=?, ";
+			String expected="employee_id=?, action=?, active=?, details=?, create_dt__d=?, create_dt__z=?, ";
 			assertTrue(cql.toString().equals(expected));
 			
 			

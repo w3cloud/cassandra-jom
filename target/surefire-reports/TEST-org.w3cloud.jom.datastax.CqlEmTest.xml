@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="14" failures="0" name="org.w3cloud.jom.datastax.CqlEmTest" time="0.244" errors="0" skipped="0">
+<testsuite tests="14" failures="0" name="org.w3cloud.jom.datastax.CqlEmTest" time="0.286" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_11\jre\bin"/>
@@ -62,18 +62,18 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindAllWithFilter" time="0.049"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIfTableExists" time="0.003"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdateEnc1" time="0.075"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdate1" time="0.018"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementDelete" time="0.015"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementUpdate" time="0.011"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsertEnc1" time="0.018"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsertEnc2" time="0.008"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIfColumnExists" time="0.003"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindAll" time="0.01"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindOne" time="0.009"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIssue1" time="0.009"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert1" time="0.009"/>
-  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert2" time="0.007"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindAllWithFilter" time="0.052"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIfTableExists" time="0.004"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdateEnc1" time="0.074"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdate1" time="0.02"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementDelete" time="0.018"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementUpdate" time="0.015"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsertEnc1" time="0.021"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsertEnc2" time="0.012"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIfColumnExists" time="0.004"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindAll" time="0.013"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindOne" time="0.016"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIssue1" time="0.017"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert1" time="0.011"/>
+  <testcase classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert2" time="0.009"/>
 </testsuite>

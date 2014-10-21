@@ -41,6 +41,7 @@ public class AuditLogEnc {
 	}
 	public void setIdStr(String idStr){}
 	private String action;
+	private boolean active; 
 	public String getAction() {
 		return action;
 	}
@@ -95,5 +96,11 @@ public class AuditLogEnc {
 	}
 	public void setCreateDt(DateWithTimeZoneEnc createDt) {
 		this.createDt = createDt;
+	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }
