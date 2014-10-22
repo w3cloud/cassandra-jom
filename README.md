@@ -10,7 +10,7 @@ cassandra-jom
 <li>Collections can be embeded using CqlStoreAsJson. Example. Order can have a list of orderItems, an item can have a list of options. The orderItems field can be annotated with CqlStoreAsJson and the jom will store the list as json in a text column.
 <li>JPA style annotations. CqlEntity, CqlId, CqlAutoGen, CqlEmbed, CqlStoreAsJson
 <li>Cassandra has very limited quering capabilities. Jom gets round the limilitation by implementing filter feature. 
-<li>In cassandra, it is efficient to update just the modified fileds. Coloumn level updates can be done, With updateColoumn method.
+<li>In cassandra, it is efficient to update just the modified fileds. Coloumn level updates can be done, using updateColoumn method.
 </ul>
 
 <h5>Maven Dependency</h5>
