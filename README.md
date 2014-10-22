@@ -90,8 +90,7 @@ Insert, update and find your entity
 <p>For more complex usage, look into my testcases</p>
 <h5>Upcoming release</h5>
 <ul>
-<li> Current version 1.2.1 is a stable release
-<li> No planned release
+<li> Versions 1.2.x are stable releases
 <li> Interface will not be changed
-<li> Only bug fixes, if any will be made
+<li> No planned release. Only bug fixes, if any will be made
 </ul>
