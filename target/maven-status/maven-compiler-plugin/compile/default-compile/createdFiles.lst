@@ -13,7 +13,6 @@ org\w3cloud\jom\CqlStatement$Expression.class
 org\w3cloud\jom\annotations\CqlAutoGen.class
 org\w3cloud\jom\datastax\CqlEntityManagerDataStax.class
 org\w3cloud\jom\annotations\CqlId.class
-org\w3cloud\jom\CqlDeleteStatement.class
 org\w3cloud\jom\util\UUIDUtil.class
 org\w3cloud\jom\annotations\CqlEntity.class
 org\w3cloud\jom\annotations\CqlIndex.class

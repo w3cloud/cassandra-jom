@@ -4,7 +4,7 @@
   <groupId>org.w3cloud.api</groupId>
   <artifactId>cassandra-jom</artifactId>
   <packaging>jar</packaging>
-  <version>1.2.2</version>
+  <version>1.2.3</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <url>http://maven.apache.org</url>
   <licenses>
@@ -38,11 +38,11 @@
 		<artifactId>cassandra-driver-core</artifactId>
 		<version>2.1.1</version>
 	</dependency>
-		<dependency>
-			<groupId>com.eaio.uuid</groupId>
-			<artifactId>uuid</artifactId>
-			<version>3.4</version>
-		</dependency>
+	<dependency>
+    <groupId>com.eaio.uuid</groupId>
+    <artifactId>uuid</artifactId>
+    <version>3.2</version>
+</dependency>
   <dependency>
 	<groupId>com.google.code.gson</groupId>
 	<artifactId>gson</artifactId>

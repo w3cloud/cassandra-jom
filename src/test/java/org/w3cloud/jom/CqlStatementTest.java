@@ -42,7 +42,7 @@ public class CqlStatementTest {
 		CqlStatement<AuditLog> cqlStatement=CqlBuilder.select(AuditLog.class).field("restaurantId").eq(restaurantId1).field("employeeId").eq(employeeId).limit(100).allowFiltering();
 		StringBuilder cql=new StringBuilder();
 		List<Object> params=new ArrayList<Object>();
-		cqlStatement.buildSelectCql(cql, params);
+		cqlStatement.buildSelectStarCql(cql, params);
 		String cqlExpected="SELECT * FROM audit_log WHERE restaurant_id =  ?  AND employee_id =  ?  LIMIT 100  ALLOW FILTERING ";
 		assertTrue(cql.toString().equals(cqlExpected));
 		assertTrue(params.size()==2);

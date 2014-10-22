@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="23" failures="0" name="org.w3cloud.jom.datastax.NoCqlTest" time="0.875" errors="0" skipped="0">
+<testsuite tests="23" failures="0" name="org.w3cloud.jom.datastax.NoCqlTest" time="0.877" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_11\jre\bin"/>
@@ -67,9 +67,9 @@
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testGetFieldTest" time="0"/>
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildUpdateCql" time="0"/>
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testAutoGenUuidEnc" time="0"/>
-  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testCamelCaseToUnderScore" time="0.001"/>
+  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testCamelCaseToUnderScore" time="0"/>
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildUpdateSetList" time="0"/>
-  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildUpdateSetListEnc" time="0.001"/>
+  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildUpdateSetListEnc" time="0"/>
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testIsStoredField" time="0"/>
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildFieldListEnc1" time="0.001"/>
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildFieldListEnc2" time="0.001"/>
@@ -78,11 +78,11 @@
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildDeleteCql" time="0"/>
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testJavaTypeToCqlType" time="0"/>
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildUpdateWhereListEnc" time="0"/>
-  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testCreateSession1" time="0"/>
-  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testCreateSession3" time="0.822"/>
+  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testCreateSession1" time="0.001"/>
+  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testCreateSession3" time="0.825"/>
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testCreateSession4" time="0.048"/>
-  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildFieldList1" time="0"/>
-  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildFieldList2" time="0.001"/>
+  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildFieldList1" time="0.001"/>
+  <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildFieldList2" time="0"/>
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildIndexCqls1" time="0"/>
   <testcase classname="org.w3cloud.jom.datastax.NoCqlTest" name="testBuildUpdateCqlEnc" time="0"/>
 </testsuite>

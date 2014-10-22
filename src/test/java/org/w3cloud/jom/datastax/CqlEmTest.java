@@ -446,6 +446,31 @@ public class CqlEmTest {
 		assertNull(al);
 		
 	}
+	@Test
+	public void testStoreAsJsonShouldAllowNulls() {
+		StoreAsJsonTest e=new StoreAsJsonTest();
+		e.restaurantId=UUIDUtil.getTimeUUID();
+		e.catId=UUIDUtil.getTimeUUID();
+		e.code="A1";
+		e.name="Bread";
+		e.description="Home Backed";
+		e.price=new BigDecimal(7.5);
+		//NOTE: e.options is null. 1.2.2 code fails with an exception.
+		//AFter fixing it should not fail
+		em.insert(e);
+	}
+	@Test
+	public void testDeleteByKey() {
+		AuditLog e=createAuditLog("DeleteCqlTest");
+		long ct=em.count(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId).field("id").eq(e.id));
+		assertTrue(ct==1);
+		em.deleteByKey(AuditLog.class, e.restaurantId,e.employeeId, e.id);
+		ct=em.count(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId).field("id").eq(e.id));
+		assertTrue(ct==0);
+		
+	}
+
+
 
 
 }

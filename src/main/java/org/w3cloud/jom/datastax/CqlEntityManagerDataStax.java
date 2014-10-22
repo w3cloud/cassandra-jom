@@ -6,6 +6,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
 import org.w3cloud.jom.CqlEntityManager;
 import org.w3cloud.jom.CqlFilter;
 import org.w3cloud.jom.CqlScriptGen;
@@ -233,6 +234,8 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 						Gson gson = new Gson();
 						String jsonStr=gson.toJson(value);
 						objList.add(jsonStr);
+					}else{
+						objList.add(null);
 					}
 				}else{
 					Object value=getField(field, entity);
@@ -404,8 +407,6 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 						}
 						setField(field, entity, value);
 					}
-						
-					
 				}
 			}
 		}
@@ -418,50 +419,14 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		
 		
 	}
-//	@Override
-//	public <T> T findOne(Class<T> modelClass, String where, Object... bindParams) {
-//		T entity=null;
-//		try {
-//			String cql=buildSelectCql(modelClass)+where;
-//			PreparedStatement statement = session.prepare(cql);
-//			BoundStatement boundStatement = new BoundStatement(statement);
-//			boundStatement.bind(bindParams);
-//			Row row=session.execute(boundStatement).one();
-//			if (row!=null){
-//				entity=getEntityFromRow(modelClass, null, row);
-//			}
-//			
-//		} catch (Throwable e) {
-//			throw new RuntimeException("Error in findOne", e);
-//		} 
-//		return entity;
-//	}
-//	@Override
-//	public <T> List<T> findAll(Class<T> modelClass, String where, Object... bindParams) {
-//		List<T> entities=new ArrayList<T>();
-//		try {
-//			String cql=buildSelectCql(modelClass)+where;
-//			PreparedStatement statement = session.prepare(cql);
-//			BoundStatement boundStatement = new BoundStatement(statement);
-//			boundStatement.bind(bindParams);
-//			List<Row> rows=session.execute(boundStatement).all();
-//			for(Row row:rows){
-//				T entity=getEntityFromRow(modelClass, null, row);
-//				entities.add(entity);
-//			}
-//			
-//		} catch (Throwable e) {
-//			throw new RuntimeException("Error in findOne", e);
-//		} 
-//		return entities;
-//	}
+
 	@Override
 	public <T> T findOne(CqlStatement<T> cqlSatement) {
 		T entity=null;
 
 		StringBuilder cql=new StringBuilder();
 		List<Object>bindParams=new ArrayList<Object>();
-		cqlSatement.buildSelectCql(cql, bindParams);
+		cqlSatement.buildSelectStarCql(cql, bindParams);
 
 		PreparedStatement statement = session.prepare(cql.toString());
 		BoundStatement boundStatement = new BoundStatement(statement);
@@ -481,24 +446,20 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 	@Override
 	public <T> List<T> findAll(CqlStatement<T> cqlStatement, CqlFilter<T> filter) {
 		List<T> entities=new ArrayList<T>();
-		try {
-			StringBuilder cql=new StringBuilder();
-			List<Object>bindParams=new ArrayList<Object>();
-			cqlStatement.buildSelectCql(cql, bindParams);
-			PreparedStatement statement = session.prepare(cql.toString());
-			BoundStatement boundStatement = new BoundStatement(statement);
-			boundStatement.bind(bindParams.toArray());
-			List<Row> rows=session.execute(boundStatement).all();
-			for(Row row:rows){
-				T entity=getEntityFromRow(cqlStatement.getEntityClass(), null, row);
-				if (filter==null){
-					entities.add(entity);
-				} else if ((filter.allowThisEntity(entity))){
-					entities.add(entity);
-				}
+		StringBuilder cql=new StringBuilder();
+		List<Object>bindParams=new ArrayList<Object>();
+		cqlStatement.buildSelectStarCql(cql, bindParams);
+		PreparedStatement statement = session.prepare(cql.toString());
+		BoundStatement boundStatement = new BoundStatement(statement);
+		boundStatement.bind(bindParams.toArray());
+		List<Row> rows=session.execute(boundStatement).all();
+		for(Row row:rows){
+			T entity=getEntityFromRow(cqlStatement.getEntityClass(), null, row);
+			if (filter==null){
+				entities.add(entity);
+			} else if ((filter.allowThisEntity(entity))){
+				entities.add(entity);
 			}
- 		} catch (Throwable e) {
-			throw new RuntimeException("Error in findOne", e);
 		}
 		return entities;
 	}
@@ -512,5 +473,25 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		BoundStatement boundStatement = new BoundStatement(statement);
 		boundStatement.bind(bindParams.toArray());
 		session.execute(boundStatement);
+	}
+	@Override
+	public <T> void deleteByKey(Class<T> entityClass, Object... keys) {
+		String deleteCql=buildDeleteCql(entityClass);
+		PreparedStatement statement = session.prepare(deleteCql);
+		BoundStatement boundStatement = new BoundStatement(statement);
+		boundStatement.bind(keys);
+		session.execute(boundStatement);
+		
+	}
+	@Override
+	public <T> long count(CqlStatement<T> cqlStatement) {
+		StringBuilder cql=new StringBuilder();
+		List<Object>bindParams=new ArrayList<Object>();
+		cqlStatement.buildSelectCountCql(cql, bindParams);
+		PreparedStatement statement = session.prepare(cql.toString());
+		BoundStatement boundStatement = new BoundStatement(statement);
+		boundStatement.bind(bindParams.toArray());
+		Row row=session.execute(boundStatement).one();
+		return row.getLong(0);
 	}
 }

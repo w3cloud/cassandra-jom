@@ -123,9 +123,18 @@ public class CqlStatement<T> {
 		}
 		cql.setLength(cql.length()-2); //Trim the last ","
 	}
-
-	public String buildSelectCql(StringBuilder cql, List<Object>params) {
+	public void buildSelectStarCql(StringBuilder cql, List<Object>params) {
 		cql.append("SELECT * FROM ");
+		buildSelectCql(cql, params);
+	}
+	public void buildSelectCountCql(StringBuilder cql, List<Object>params) {
+		cql.append("SELECT count(*) FROM ");
+		buildSelectCql(cql, params);
+	}
+
+
+
+	protected void buildSelectCql(StringBuilder cql, List<Object>params) {
 		cql.append(camelCaseToUnderScore(entityClass.getSimpleName()));
 		buildWhereClause(cql, params);
 		if (limit>0){
@@ -136,8 +145,9 @@ public class CqlStatement<T> {
 		if (allowFiltering){
 			cql.append(" ALLOW FILTERING ");
 		}
-		return cql.toString();
+		//return cql.toString();
 	}
+
 	public String buildUpdateCql(StringBuilder cql, List<Object>params) {
 		cql.append("UPDATE ");
 		cql.append(camelCaseToUnderScore(entityClass.getSimpleName()));
