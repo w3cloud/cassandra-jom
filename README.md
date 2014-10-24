@@ -66,6 +66,8 @@ Insert, update and find your entity
 			props.put("cql.contactpoint", "localhost");
 			props.put("cql.keyspace","jom_test");
 			props.put("cql.synctableschema", "true");
+			//if you have more than one package to scan,
+			//Pass a comma separated list
 			props.put("cql.packagestoscan", "org.w3cloud.jom.testmodels");
 			//Store EntityManager as a static variable at the applicaiton level.
 			CqlEntityManager em=CqlEntityManagerFactory.createEntityManger(props);
