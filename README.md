@@ -18,7 +18,7 @@ cassandra-jom
     <dependency>
       <groupId>org.w3cloud.api</groupId>
       <artifactId>cassandra-jom</artifactId>
-      <version>1.2.3</version>
+      <version>1.2.4</version>
     </dependency>
     
     If cassandra-jom is not resolved, add sonatype repo to your pom.xml
@@ -63,7 +63,9 @@ Insert, update and find your entity
 
 <pre>
 			Properties props=new Properties();
-			props.put("cql.contactpoint", "localhost");
+			//You can also pass multiple contact points and port numbers.
+			// Example: props.put("cql.contactpoints", "localhost:9042,anotherhost:9042");
+			props.put("cql.contactpoints", "localhost");
 			props.put("cql.keyspace","jom_test");
 			props.put("cql.synctableschema", "true");
 			//if you have more than one package to scan,
