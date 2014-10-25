@@ -1,5 +1,7 @@
 package org.w3cloud.jom.datastax;
 
+import java.net.InetSocketAddress;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
@@ -54,18 +56,6 @@ public class NoCqlTest {
 		assertTrue(gen.javaTypeToCqlType("float").equals("float"));
 		assertTrue(gen.javaTypeToCqlType("java.lang.Integer").equals("int"));
 		assertTrue(gen.javaTypeToCqlType("java.lang.Long").equals("bigint"));
-	}
-	@Test
-	public void testCreateSession1() {
-		try{
-			CqlEntityManagerDataStax em=new CqlEntityManagerDataStax();
-			Properties props=new Properties();
-			em.createSession(props);
-			assertTrue(false);
-		}catch(RuntimeException ex){
-			System.out.println(ex.getMessage());
-			assertTrue(ex.getMessage().startsWith("Prop: cql.contactpoint is null"));
-		}
 	}
 	@Test
 	public void testCreateSession3() {
@@ -327,6 +317,47 @@ public class NoCqlTest {
 		String expected="DELETE FROM audit_log WHERE restaurant_id=? AND employee_id=? AND id=? ";
 		assertTrue("Expected:\n"+expected+"End\nActual:\n"+cql.toString()+"END", cql.toString().equals(expected));
 	}
+	@Test
+	public void testParseContactPoints(){
+		CqlEntityManagerDataStax em=new CqlEntityManagerDataStax();
+		String contactPointsStr="localhost";
+		List<InetSocketAddress> cps=em.parseContactPoints(contactPointsStr);
+		assertNotNull(cps);
+		assertTrue(cps.size()==1);
+		InetSocketAddress cp=cps.get(0);
+		assertTrue(cp.getHostName().equals("localhost"));
+		assertTrue(cp.getPort()==CqlEntityManagerDataStax.DEFAULT_PORT);
+	}
 	
+	@Test
+	public void testParseContactPoints2(){
+		CqlEntityManagerDataStax em=new CqlEntityManagerDataStax();
+		String contactPointsStr="localhost:9042";
+		List<InetSocketAddress> cps=em.parseContactPoints(contactPointsStr);
+		assertNotNull(cps);
+		assertTrue(cps.size()==1);
+		InetSocketAddress cp=cps.get(0);
+		assertTrue(cp.getHostName().equals("localhost"));
+		assertTrue(cp.getPort()==CqlEntityManagerDataStax.DEFAULT_PORT);
+	}
+	@Test
+	public void testParseContactPoints3(){
+		CqlEntityManagerDataStax em=new CqlEntityManagerDataStax();
+		String contactPointsStr="localhost:9042,host2,host3:4546";
+		List<InetSocketAddress> cps=em.parseContactPoints(contactPointsStr);
+		assertNotNull(cps);
+		assertTrue(cps.size()==3);
+		InetSocketAddress cp=cps.get(0);
+		assertTrue(cp.getHostName().equals("localhost"));
+		assertTrue(cp.getPort()==CqlEntityManagerDataStax.DEFAULT_PORT);
+		cp=cps.get(1);
+		assertTrue(cp.getHostName().equals("host2"));
+		assertTrue(cp.getPort()==CqlEntityManagerDataStax.DEFAULT_PORT);
+		cp=cps.get(2);
+		assertTrue(cp.getHostName().equals("host3"));
+		assertTrue(cp.getPort()==4546);
+		
+		
+	}
 	
 }

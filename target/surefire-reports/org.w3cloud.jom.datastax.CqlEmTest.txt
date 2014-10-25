@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: org.w3cloud.jom.datastax.CqlEmTest
 -------------------------------------------------------------------------------
-Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 17.986 sec
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.668 sec

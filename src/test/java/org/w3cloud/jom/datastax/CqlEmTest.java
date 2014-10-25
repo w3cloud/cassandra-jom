@@ -52,7 +52,7 @@ public class CqlEmTest {
 					"= {'class':'SimpleStrategy', 'replication_factor':1};");
 			session=cluster.connect("jom_test");
 			Properties props=new Properties();
-			props.put("cql.contactpoint", "localhost");
+			props.put("cql.contactpoints", "127.0.0.1");
 			props.put("cql.keyspace","jom_test");
 			props.put("cql.synctableschema", "true");
 			props.put("cql.packagestoscan", "org.w3cloud.jom.testmodels");
@@ -435,6 +435,17 @@ public class CqlEmTest {
 		AuditLog al=als.get(0);
 		assertTrue(al.details.equals(updatedDetails));
 	}
+	@Test
+	public void testUpdate2() {
+		String updatedDetails="UpdatedToThisValue";
+		AuditLog e=createAuditLog();
+		e.details=updatedDetails;
+		em.update(e);
+		AuditLog al=em.findOne(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId).field("id").eq(e.id));
+		assertNotNull(al);
+		assertTrue(al.details.equals(updatedDetails));
+	}
+
 	@Test
 	public void testStatementDelete() {
 		AuditLog e=createAuditLog("DeleteCqlTest");

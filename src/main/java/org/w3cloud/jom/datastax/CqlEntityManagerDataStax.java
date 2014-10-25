@@ -1,8 +1,10 @@
 package org.w3cloud.jom.datastax;
 
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -64,6 +66,29 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		String replacement = "$1_$2";
 		return camelCaseName.replaceAll(regex, replacement).toLowerCase();
 	}
+	protected static int DEFAULT_PORT=9042;
+	protected List<InetSocketAddress>parseContactPoints(String contactPointsStr){
+		List<InetSocketAddress> contactPoints=new ArrayList<InetSocketAddress>();
+		contactPointsStr=contactPointsStr.replaceAll("\\s+","");
+		String[]tokens=contactPointsStr.split(",");
+		for(String token:tokens){
+			String[] hostAndPort=token.split(":");
+			String host;
+			int port;
+			if (hostAndPort.length==2){
+				port=Integer.parseInt(hostAndPort[1]);
+			}else{
+				port=DEFAULT_PORT;
+				
+			}
+			host=hostAndPort[0];
+			InetSocketAddress contactPoint=new InetSocketAddress(host, port);
+			contactPoints.add(contactPoint);
+		}
+		
+		return contactPoints;
+		
+	}
 	/**
 	 * Builds the datastax session
 	 * Properties used: cql.clustername, cql.contactpoint,
@@ -73,10 +98,13 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 	 * @return
 	 */
 	protected Session createSession(Properties props){
-		String contactPoint=getStrProp(props, "cql.contactpoint");
+		String contactPointsStr=getStrProp(props, "cql.contactpoints");
+		List<InetSocketAddress>contactPoints=parseContactPoints(contactPointsStr);
+		
 		String keySpace=getStrProp(props, "cql.keyspace");
+		
 		Cluster cluster = Cluster.builder()
-                .addContactPoint(contactPoint)
+				.addContactPointsWithPorts(contactPoints)
                 .build();
 		Session session=cluster.connect(keySpace);
 		return session;
@@ -84,7 +112,7 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 	protected String getStrProp(Properties props, String name){
 		String retVal=props.getProperty(name);
 		if (retVal==null){
-			throw new RuntimeException("Prop: "+name+" is null");
+			throw new RuntimeException("Prop: "+name+" is required");
 		}
 		return retVal;
 	}
@@ -319,6 +347,7 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
  		bindFields(fields, entity, objList, BindOption.exceptIdFields);
  		bindFields(fields,entity, objList, BindOption.onlyIdFields);
 		boundStatement.bind(objList.toArray());
+		session.execute(boundStatement);
 		
 	}
 	@Override
@@ -494,4 +523,5 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		Row row=session.execute(boundStatement).one();
 		return row.getLong(0);
 	}
+
 }
