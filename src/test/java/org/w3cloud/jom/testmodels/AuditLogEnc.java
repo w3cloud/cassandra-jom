@@ -7,6 +7,7 @@ import org.w3cloud.jom.annotations.CqlEmbed;
 import org.w3cloud.jom.annotations.CqlEntity;
 import org.w3cloud.jom.annotations.CqlId;
 import org.w3cloud.jom.annotations.CqlIndex;
+import org.w3cloud.jom.annotations.CqlId.IdType;
 
 
 
@@ -19,9 +20,9 @@ public class AuditLogEnc {
 		public static String STOPPED_TAKING_ORDER="Stopped Taking Order";
 	}
 	//Composite key restaurantId and id
-	@CqlId
+	@CqlId(idType=IdType.PARTITION_KEY)
 	private UUID restaurantId;
-	@CqlId
+	@CqlId(idType=IdType.PARTITION_KEY)
 	@CqlAutoGen
 	private UUID id;
 	@CqlIndex

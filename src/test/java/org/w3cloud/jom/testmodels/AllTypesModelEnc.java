@@ -7,10 +7,11 @@ import java.util.UUID;
 import org.w3cloud.jom.annotations.CqlAutoGen;
 import org.w3cloud.jom.annotations.CqlEntity;
 import org.w3cloud.jom.annotations.CqlId;
+import org.w3cloud.jom.annotations.CqlId.IdType;
 
 @CqlEntity
 public class AllTypesModelEnc {
-	@CqlId
+	@CqlId(idType=IdType.PARTITION_KEY)
 	@CqlAutoGen
 	private UUID uuid;
 	private boolean boolVal;

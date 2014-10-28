@@ -8,14 +8,15 @@ import org.w3cloud.jom.annotations.CqlAutoGen;
 import org.w3cloud.jom.annotations.CqlEntity;
 import org.w3cloud.jom.annotations.CqlId;
 import org.w3cloud.jom.annotations.CqlStoreAsJson;
+import org.w3cloud.jom.annotations.CqlId.IdType;
 
 @CqlEntity
 public class StoreAsJsonTest {
-	@CqlId
+	@CqlId(idType=IdType.PARTITION_KEY)
 	public UUID restaurantId;
-	@CqlId
+	@CqlId(idType=IdType.PARTITION_KEY)
 	public UUID catId;
-	@CqlId
+	@CqlId(idType=IdType.CLUSTER_KEY)
 	@CqlAutoGen
 	public UUID id;
 	public String getIdStr(){

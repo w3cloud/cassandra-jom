@@ -12,6 +12,8 @@ public class CqlStatement<T> {
 		protected static final String TYPE_LT=" < ";
 		protected static final String TYPE_IN=" IN ";
 		protected static final String TYPE_SET=" SET ";
+		protected static final String TYPE_ADD=" ADD ";
+
 		private CqlStatement<T> cqlStatment;
 		private String fieldName;
 		private String operation;
@@ -55,6 +57,12 @@ public class CqlStatement<T> {
 			this.value=value;
 			return this.cqlStatment;
 		}
+		public CqlStatement<T> add(Object value){
+			this.operation=TYPE_ADD;
+			this.value=value;
+			return this.cqlStatment;
+		}
+
 	}
 	protected Class<T> entityClass;
 	protected List<Expression> expressions=null;
@@ -63,6 +71,8 @@ public class CqlStatement<T> {
 	}
 	protected int limit=0;//no limit
 	protected boolean allowFiltering=false;
+	protected String orderBy=null;
+	protected boolean orderByDesc=true;
 
 	
 	public CqlStatement(Class<T> entityClass){
@@ -90,6 +100,12 @@ public class CqlStatement<T> {
 		allowFiltering=true;
 		return this;
 	}
+	public CqlStatement<T> orderBy(String orderBy, boolean desc){
+		this.orderBy=orderBy;
+		this.orderByDesc=desc;
+		return this;
+	}
+
 	protected void buildWhereClause(StringBuilder cql, List<Object>params){
 		cql.append(" WHERE ");
 		if (expressions==null)
@@ -100,11 +116,31 @@ public class CqlStatement<T> {
 			if (!expr.operation.equals(Expression.TYPE_SET)){
 				cql.append(camelCaseToUnderScore(expr.fieldName));
 				cql.append(expr.operation);
-				cql.append(" ? ");
+				if (expr.operation.equals(Expression.TYPE_IN)){
+					cql.append(" ( ");
+					
+					
+					Object[] values=(Object[])expr.value;
+					int valuesSize=values.length;
+					for(int j=0;j<valuesSize;++j){
+						cql.append("?");
+						if ((j+1)<valuesSize){ //not last item
+							cql.append(",");
+						}
+					}
+					for(Object value:values){
+						params.add(value);
+					}
+					cql.append(" ) ");
+					
+				}else{
+					cql.append(" ? ");
+					params.add(expr.value);
+				}
 				if ((i+1)<exprSize){ //not last item
 					cql.append(" AND ");
 				}
-				params.add(expr.value);
+
 			}
 		}
 	}
@@ -119,7 +155,17 @@ public class CqlStatement<T> {
 				cql.append(" ? ");
 				cql.append(", ");
 				params.add(expr.value);
+			} else if (expr.operation.equals(Expression.TYPE_ADD)){ //Countre coloumn
+				cql.append(" SET ");
+				String cqlName=camelCaseToUnderScore(expr.fieldName); 
+				cql.append(cqlName);
+				cql.append(" = ");
+				cql.append(cqlName);
+				cql.append(" + ? ");
+				cql.append(", ");
+				params.add(expr.value);
 			}
+
 		}
 		cql.setLength(cql.length()-2); //Trim the last ","
 	}
@@ -137,6 +183,12 @@ public class CqlStatement<T> {
 	protected void buildSelectCql(StringBuilder cql, List<Object>params) {
 		cql.append(camelCaseToUnderScore(entityClass.getSimpleName()));
 		buildWhereClause(cql, params);
+		if (orderBy!=null){
+			String cqlName=camelCaseToUnderScore(orderBy);
+			cql.append(" ORDER BY ");
+			cql.append(cqlName);
+			cql.append(orderByDesc?" DESC ":" ASC ");
+		}
 		if (limit>0){
 			cql.append(" LIMIT ");
 			cql.append(limit);

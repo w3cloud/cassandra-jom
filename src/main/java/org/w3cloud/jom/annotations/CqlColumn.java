@@ -7,10 +7,9 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface CqlId {
-	enum IdType{
-		PARTITION_KEY,
-		CLUSTER_KEY
+public @interface CqlColumn {
+	enum DataType{
+		COUNTER
 	};
-	IdType idType();
+	DataType dataType();
 }

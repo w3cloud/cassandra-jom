@@ -8,9 +8,12 @@ import java.util.Set;
 
 import org.reflections.Reflections;
 import org.w3cloud.jom.CqlScriptGen;
+import org.w3cloud.jom.annotations.CqlColumn;
+import org.w3cloud.jom.annotations.CqlColumn.DataType;
 import org.w3cloud.jom.annotations.CqlEmbed;
 import org.w3cloud.jom.annotations.CqlEntity;
 import org.w3cloud.jom.annotations.CqlId;
+import org.w3cloud.jom.annotations.CqlId.IdType;
 import org.w3cloud.jom.annotations.CqlIndex;
 import org.w3cloud.jom.annotations.CqlStoreAsJson;
 import org.w3cloud.jom.annotations.CqlTransient;
@@ -71,7 +74,9 @@ public class CqlScriptGenDataStax implements CqlScriptGen{
 	@Override
 	public String buildCreateCql(Class<?> modelClass) {
 		StringBuilder cql=new StringBuilder();
-		List<String> primaryKeys=new ArrayList<String>(4);
+		List<String> partitionKeys=new ArrayList<String>(4);
+		List<String> clusterKeys=new ArrayList<String>(4);
+
 		Field[] fields=modelClass.getDeclaredFields();
 		cql.append("CREATE TABLE ");
 		cql.append(camelCaseToUnderScore(modelClass.getSimpleName()));
@@ -83,7 +88,13 @@ public class CqlScriptGenDataStax implements CqlScriptGen{
 			if (isStoredField(field)){
 				// if field annotated with NoSqlId, add to the primary keys list
 				if (field.getAnnotation(CqlId.class)!=null){
-					primaryKeys.add(camelCaseToUnderScore(field.getName()));
+					CqlId cqlId=field.getAnnotation(CqlId.class);
+					if (cqlId.idType()==IdType.PARTITION_KEY){
+						partitionKeys.add(camelCaseToUnderScore(field.getName()));
+					}else{
+						clusterKeys.add(camelCaseToUnderScore(field.getName()));
+					}
+					
 				}
 				if (field.getAnnotation(CqlEmbed.class)!=null){
 					String cassandraFieldName=camelCaseToUnderScore(field.getName());
@@ -111,6 +122,15 @@ public class CqlScriptGenDataStax implements CqlScriptGen{
 					Class<?> fieldType=field.getType();
 					String fieldTypeName=fieldType.getName();
 					String cassandraFieldTypeName=javaTypeToCqlType(fieldTypeName);
+					if (field.getAnnotation(CqlColumn.class)!=null){
+						CqlColumn cqlColumn=field.getAnnotation(CqlColumn.class);
+						if (cqlColumn.dataType()==DataType.COUNTER){
+							cassandraFieldTypeName=" counter ";
+						}
+							
+						
+						
+					}
 					cql.append(cassandraFieldName);
 					cql.append(" ");
 					cql.append(cassandraFieldTypeName);
@@ -118,9 +138,16 @@ public class CqlScriptGenDataStax implements CqlScriptGen{
 				}
 			}
 		}
-		cql.append("PRIMARY KEY(");
-		for(String primaryKey:primaryKeys){
+		cql.append("PRIMARY KEY( (");
+		
+		for(String primaryKey:partitionKeys){
 			cql.append(primaryKey);
+			cql.append(", ");
+		}
+		cql.setLength(cql.length()-2);
+		cql.append("), ");
+		for(String clusterKey:clusterKeys){
+			cql.append(clusterKey);
 			cql.append(", ");
 		}
 		cql.setLength(cql.length()-2);

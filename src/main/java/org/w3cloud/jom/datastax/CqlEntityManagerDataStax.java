@@ -481,6 +481,7 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		PreparedStatement statement = session.prepare(cql.toString());
 		BoundStatement boundStatement = new BoundStatement(statement);
 		boundStatement.bind(bindParams.toArray());
+		boundStatement.setFetchSize(Integer.MAX_VALUE);//Disabling automatic paging as this feature does not work with order by clauses
 		List<Row> rows=session.execute(boundStatement).all();
 		for(Row row:rows){
 			T entity=getEntityFromRow(cqlStatement.getEntityClass(), null, row);
@@ -522,6 +523,43 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		boundStatement.bind(bindParams.toArray());
 		Row row=session.execute(boundStatement).one();
 		return row.getLong(0);
+	}
+	private Field findField(Field[] fields, String fieldName){
+		Field retField=null;
+		for (Field field:fields){
+			if (field.getName().equals(fieldName)){
+				retField=field;
+				break;
+			}
+		}
+		return retField;
+		
+	}
+	@Override
+	public <T> Object[] findAllOneColumn(String coloumnNameToBeSelected,
+			CqlStatement<T> cqlStatement) {
+		
+		StringBuilder cql=new StringBuilder();
+		List<Object>bindParams=new ArrayList<Object>();
+		cqlStatement.buildSelectStarCql(cql, bindParams);
+		PreparedStatement statement = session.prepare(cql.toString());
+		BoundStatement boundStatement = new BoundStatement(statement);
+		boundStatement.bind(bindParams.toArray());
+		List<Row> rows=session.execute(boundStatement).all();
+		Field[] fields=cqlStatement.getEntityClass().getDeclaredFields();
+		Field selectfield=findField(fields, coloumnNameToBeSelected);
+		Object[] retObjs=null;
+		if(rows.size()>0){
+			retObjs=new Object[rows.size()];
+			int i=0;
+		
+			for(Row row:rows){
+				Object value=getFieldFromRow(null, selectfield, row);
+				retObjs[i]=value;
+				i++;
+			}
+		}
+		return retObjs;
 	}
 
 }

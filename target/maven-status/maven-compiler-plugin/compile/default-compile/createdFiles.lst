@@ -1,10 +1,12 @@
 org\w3cloud\jom\datastax\CqlEntityManagerDataStax$BindOption.class
 org\w3cloud\jom\datastax\CqlScriptGenDataStax.class
+org\w3cloud\jom\annotations\CqlId$IdType.class
 org\w3cloud\jom\CqlBuilder.class
 org\w3cloud\jom\CqlEntityManager.class
 org\w3cloud\jom\CqlFilter.class
 org\w3cloud\jom\annotations\CqlTransient.class
 org\w3cloud\jom\annotations\CqlStoreAsJson.class
+org\w3cloud\jom\annotations\CqlColumn.class
 org\w3cloud\jom\CqlEntityManagerFactory.class
 org\w3cloud\jom\CqlScriptGenFactory.class
 org\w3cloud\jom\CqlStatement.class
@@ -15,5 +17,6 @@ org\w3cloud\jom\datastax\CqlEntityManagerDataStax.class
 org\w3cloud\jom\annotations\CqlId.class
 org\w3cloud\jom\util\UUIDUtil.class
 org\w3cloud\jom\annotations\CqlEntity.class
+org\w3cloud\jom\annotations\CqlColumn$DataType.class
 org\w3cloud\jom\annotations\CqlIndex.class
 org\w3cloud\jom\CqlScriptGen.class

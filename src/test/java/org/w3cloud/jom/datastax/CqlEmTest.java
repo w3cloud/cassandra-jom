@@ -20,12 +20,16 @@ import org.w3cloud.jom.datastax.CqlEntityManagerDataStax;
 import org.w3cloud.jom.datastax.CqlScriptGenDataStax;
 import org.w3cloud.jom.testmodels.AuditLog;
 import org.w3cloud.jom.testmodels.AuditLogEnc;
+import org.w3cloud.jom.testmodels.CountTestModel;
 import org.w3cloud.jom.testmodels.DateWithTimeZone;
 import org.w3cloud.jom.testmodels.DateWithTimeZoneEnc;
+import org.w3cloud.jom.testmodels.IndexTestModel;
+import org.w3cloud.jom.testmodels.IndexTestModelIndex;
 import org.w3cloud.jom.testmodels.Option;
 import org.w3cloud.jom.testmodels.OptionEnc;
 import org.w3cloud.jom.testmodels.OptionResponse;
 import org.w3cloud.jom.testmodels.OptionResponseEnc;
+import org.w3cloud.jom.testmodels.OrderByTestModel;
 import org.w3cloud.jom.testmodels.StoreAsJsonTest;
 import org.w3cloud.jom.testmodels.StoreAsJsonTestEnc;
 import org.w3cloud.jom.util.UUIDUtil;
@@ -480,6 +484,72 @@ public class CqlEmTest {
 		assertTrue(ct==0);
 		
 	}
+	@Test
+	public void testCounterTest() {
+		CountTestModel ctm=new CountTestModel();
+		String key="one";
+		ctm.someKey=key;
+		ctm.ct=0L;
+		em.updateColumn(ctm, CqlBuilder.select(CountTestModel.class).field("ct").add(new Long(1)));
+		CountTestModel ctm3=em.findOne(CqlBuilder.select(CountTestModel.class).field("someKey").eq(key));
+		assertNotNull(ctm3);
+		assertTrue(ctm3.ct==1);
+	}
+
+	@Test
+	public void testOrderBy() {
+		OrderByTestModel e1=new OrderByTestModel();
+		e1.key1="5";
+		e1.key2="bbb";
+		e1.someData="SomeData";
+		em.insert(e1);
+		OrderByTestModel e2=new OrderByTestModel();
+		e2.key1="3";
+		e2.key2="aaa";
+		e2.someData="SomeData";
+		em.insert(e2);
+		OrderByTestModel e3=new OrderByTestModel();
+		e3.key1="4";
+		e3.key2="ccc";
+		e3.someData="SomeData";
+		em.insert(e3);
+		List<OrderByTestModel>es=em.findAll(CqlBuilder.select(OrderByTestModel.class).field("key1").in("5", "3", "4").orderBy("key2", false).limit(10));
+		assertNotNull(es);
+		assertTrue("Value got:"+es.get(0).key2, es.get(0).key2.equals("aaa"));
+	}
+	@Test
+	public void testExtTableIndex() {
+		IndexTestModel e1=new IndexTestModel();
+		e1.key1="5";
+		e1.key2="bbb";
+		e1.someData="SomeData";
+		em.insert(e1);
+		IndexTestModel e2=new IndexTestModel();
+		e2.key1="3";
+		e2.key2="aaa";
+		e2.someData="SomeData";
+		em.insert(e2);
+		IndexTestModel e3=new IndexTestModel();
+		e3.key1="4";
+		e3.key2="ccc";
+		e3.someData="SomeData";
+		em.insert(e3);
+		IndexTestModelIndex ei1=new IndexTestModelIndex();
+		ei1.searchText="great";
+		ei1.key1=e1.key1;
+		em.insert(ei1);
+		ei1=new IndexTestModelIndex();
+		ei1.searchText="great";
+		ei1.key1=e2.key1;
+		em.insert(ei1);
+		Object[] objs=em.findAllOneColumn("key1", CqlBuilder.select(IndexTestModelIndex.class).field("searchText").eq("great"));
+		assertNotNull(objs);
+		List<IndexTestModel>es=em.findAll(CqlBuilder.select(IndexTestModel.class).field("key1").in(objs).orderBy("key2", false).limit(10));
+		assertNotNull(es);
+		assertTrue(es.size()==2);
+		assertTrue("Value got:"+es.get(0).key2, es.get(0).key2.equals("aaa"));
+	}
+
 
 
 

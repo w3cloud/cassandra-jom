@@ -19,10 +19,12 @@ public interface CqlEntityManager {
 	 * @param statement
 	 */
 	<T >void updateColumn(T entity, CqlStatement<T> statement);
+
 	<T> T findOne(CqlStatement<T> statement);
 	<T> List<T> findAll(CqlStatement<T> statement);
 	<T> long count(CqlStatement<T> statement);
 	<T> List<T> findAll(CqlStatement<T> statement, CqlFilter<T> filter);
 	void delete(Object entity);
 	<T>void deleteByKey(Class<T>entityClass, Object...keys);
+	<T> Object[] findAllOneColumn(String coloumnNameToBeSelected, CqlStatement<T> statement);
 }

@@ -1,3 +1,4 @@
+org\w3cloud\jom\testmodels\CountTestModel.class
 org\w3cloud\jom\testmodels\TestModel1.class
 org\w3cloud\jom\testmodels\OrderItemEnc.class
 org\w3cloud\jom\testmodels\OptionResponse.class
@@ -15,7 +16,10 @@ org\w3cloud\jom\CqlStatementTest.class
 org\w3cloud\jom\testmodels\DateWithTimeZone.class
 org\w3cloud\jom\testmodels\AuditLogEnc.class
 org\w3cloud\jom\testmodels\CustOrderEnc$PAYMENT_TYPE.class
+org\w3cloud\jom\testmodels\IndexTestModelIndex.class
 org\w3cloud\jom\testmodels\AuditLog$ACTION.class
+org\w3cloud\jom\testmodels\IndexTestModel.class
+org\w3cloud\jom\testmodels\OrderByTestModel.class
 org\w3cloud\jom\testmodels\CustOrder$ORDER_TYPE.class
 org\w3cloud\jom\testmodels\CustOrder$PAYMENT_TYPE.class
 org\w3cloud\jom\testmodels\AllTypesModelEnc.class

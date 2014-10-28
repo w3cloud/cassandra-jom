@@ -10,6 +10,7 @@ import org.w3cloud.jom.annotations.CqlEmbed;
 import org.w3cloud.jom.annotations.CqlEntity;
 import org.w3cloud.jom.annotations.CqlId;
 import org.w3cloud.jom.annotations.CqlStoreAsJson;
+import org.w3cloud.jom.annotations.CqlId.IdType;
 
 @CqlEntity
 public class CustOrder {
@@ -31,12 +32,12 @@ public class CustOrder {
 		public static String COMPLETE="Complete";
 		public static String CANCELLED="Cancelled";
 	}
-	@CqlId
+	@CqlId(idType=IdType.PARTITION_KEY)
 	public UUID restaurantId;
-	@CqlId
+	@CqlId(idType=IdType.PARTITION_KEY)
 	@CqlAutoGen
 	public UUID id;
-	@CqlId
+	@CqlId(idType=IdType.CLUSTER_KEY)
 	public UUID userId;
 
 	public String getIdStr(){

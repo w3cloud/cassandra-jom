@@ -18,7 +18,7 @@ cassandra-jom
     <dependency>
       <groupId>org.w3cloud.api</groupId>
       <artifactId>cassandra-jom</artifactId>
-      <version>1.2.4</version>
+      <version>1.2.5</version>
     </dependency>
     
     If cassandra-jom is not resolved, add sonatype repo to your pom.xml
@@ -42,7 +42,7 @@ import org.w3cloud.jom.annotations.CqlId;
 
 @CqlEntity
 public class CarModel {
-	@CqlId
+	@CqlId(idType=IdType.PARTITION_KEY) //another idType is CLUSTER_KEY
 	@CqlAutoGen
 	private UUID id;
 	private String make;
@@ -94,7 +94,6 @@ Insert, update and find your entity
 <p>For more complex usage, look into my testcases</p>
 <h5>Upcoming release</h5>
 <ul>
-<li> Versions 1.2.x are stable releases
-<li> Interface will not be changed
-<li> No planned release. Only bug fixes, if any will be made
+<li> The interfaces are some what stable. Still, my project that uses this JOM is under development. Besides, everyday I am learning something new with cassandra. I anticipate few interfaces changes until everything settles down. 
+<li> No planned release. 
 </ul>

@@ -5,15 +5,16 @@ import java.util.UUID;
 import org.w3cloud.jom.annotations.CqlAutoGen;
 import org.w3cloud.jom.annotations.CqlEntity;
 import org.w3cloud.jom.annotations.CqlId;
+import org.w3cloud.jom.annotations.CqlId.IdType;
 
 
 
 @CqlEntity
 public class AutoGenUuidTestEnc {
 	//Composite key restaurantId and id
-	@CqlId
+	@CqlId(idType=IdType.PARTITION_KEY)
 	private UUID restaurantId;
-	@CqlId
+	@CqlId(idType=IdType.PARTITION_KEY)
 	@CqlAutoGen
 	private UUID id;
 	private UUID employeeId;

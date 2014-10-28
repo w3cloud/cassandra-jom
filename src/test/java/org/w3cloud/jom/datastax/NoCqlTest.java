@@ -1,7 +1,6 @@
 package org.w3cloud.jom.datastax;
 
 import java.net.InetSocketAddress;
-import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
@@ -11,8 +10,6 @@ import org.w3cloud.jom.datastax.CqlScriptGenDataStax;
 import org.w3cloud.jom.testmodels.AuditLog;
 import org.w3cloud.jom.testmodels.AuditLogEnc;
 import org.w3cloud.jom.testmodels.AutoGenUuidTest;
-
-import com.datastax.driver.core.Session;
 
 import static org.junit.Assert.*;
 
@@ -359,5 +356,11 @@ public class NoCqlTest {
 		
 		
 	}
-	
+	@Test
+	public void testBuildCreateCql() {
+		CqlScriptGenDataStax gen=new CqlScriptGenDataStax();
+		String expected="CREATE TABLE audit_log (restaurant_id timeuuid, employee_id timeuuid, id timeuuid, action text, details text, create_dt__d timestamp, create_dt__z text, PRIMARY KEY( (restaurant_id, employee_id), id));";
+		String cql=gen.buildCreateCql(AuditLog.class);
+		assertTrue("Expected:\n"+expected+"End\nActual:\n"+cql+"END", cql.equals(expected));
+	}
 }
