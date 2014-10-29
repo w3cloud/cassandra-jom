@@ -2,6 +2,7 @@ package org.w3cloud.jom;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class CqlStatement<T> {
 	public class Expression{
@@ -52,6 +53,12 @@ public class CqlStatement<T> {
 			this.value=values;
 			return this.cqlStatment;
 		}
+		public CqlStatement<T> in(Set<Object> values){
+			this.operation=TYPE_IN;
+			this.value=values;
+			return this.cqlStatment;
+		}
+
 		public CqlStatement<T> set(Object value){
 			this.operation=TYPE_SET;
 			this.value=value;
@@ -119,17 +126,33 @@ public class CqlStatement<T> {
 				if (expr.operation.equals(Expression.TYPE_IN)){
 					cql.append(" ( ");
 					
-					
-					Object[] values=(Object[])expr.value;
-					int valuesSize=values.length;
-					for(int j=0;j<valuesSize;++j){
-						cql.append("?");
-						if ((j+1)<valuesSize){ //not last item
-							cql.append(",");
+					if (expr.value instanceof Object[]){
+						Object[] values=(Object[])expr.value;
+						int valuesSize=values.length;
+						for(int j=0;j<valuesSize;++j){
+							cql.append("?");
+							if ((j+1)<valuesSize){ //not last item
+								cql.append(",");
+							}
 						}
-					}
-					for(Object value:values){
-						params.add(value);
+						for(Object value:values){
+							params.add(value);
+						}
+						
+					}else{
+						@SuppressWarnings("unchecked")
+						Set<Object>values=(Set<Object>)expr.value;
+						int valuesSize=values.size();
+						for(int j=0;j<valuesSize;++j){
+							cql.append("?");
+							if ((j+1)<valuesSize){ //not last item
+								cql.append(",");
+							}
+						}
+						for(Object value:values){
+							params.add(value);
+						}
+						
 					}
 					cql.append(" ) ");
 					

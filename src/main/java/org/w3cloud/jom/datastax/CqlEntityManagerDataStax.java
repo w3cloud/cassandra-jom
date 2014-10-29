@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.w3cloud.jom.CqlEntityManager;
 import org.w3cloud.jom.CqlFilter;
@@ -560,6 +561,27 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 			}
 		}
 		return retObjs;
+	}
+	@Override
+	public <T> void findAllOneColumn(Set<Object> objSet,
+			String coloumnNameToBeSelected, CqlStatement<T> cqlStatement) {
+		StringBuilder cql=new StringBuilder();
+		List<Object>bindParams=new ArrayList<Object>();
+		cqlStatement.buildSelectStarCql(cql, bindParams);
+		PreparedStatement statement = session.prepare(cql.toString());
+		BoundStatement boundStatement = new BoundStatement(statement);
+		boundStatement.bind(bindParams.toArray());
+		List<Row> rows=session.execute(boundStatement).all();
+		Field[] fields=cqlStatement.getEntityClass().getDeclaredFields();
+		Field selectfield=findField(fields, coloumnNameToBeSelected);
+		
+		if(rows.size()>0){
+			for(Row row:rows){
+				Object value=getFieldFromRow(null, selectfield, row);
+				objSet.add(value);
+			}
+		}
+		
 	}
 
 }

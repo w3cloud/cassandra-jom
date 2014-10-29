@@ -1,6 +1,7 @@
 package org.w3cloud.jom;
 
 import java.util.List;
+import java.util.Set;
 
 public interface CqlEntityManager {
 	/**
@@ -27,4 +28,5 @@ public interface CqlEntityManager {
 	void delete(Object entity);
 	<T>void deleteByKey(Class<T>entityClass, Object...keys);
 	<T> Object[] findAllOneColumn(String coloumnNameToBeSelected, CqlStatement<T> statement);
+	<T> void findAllOneColumn(Set<Object>objSet, String coloumnNameToBeSelected, CqlStatement<T> statement);
 }

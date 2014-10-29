@@ -5,8 +5,10 @@ import static org.junit.Assert.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.UUID;
 
 import org.junit.AfterClass;
@@ -538,20 +540,60 @@ public class CqlEmTest {
 		ei1.searchText="great";
 		ei1.key1=e1.key1;
 		em.insert(ei1);
-		ei1=new IndexTestModelIndex();
-		ei1.searchText="great";
-		ei1.key1=e2.key1;
-		em.insert(ei1);
+		IndexTestModelIndex ei2=new IndexTestModelIndex();
+		ei2.searchText="great";
+		ei2.key1=e2.key1;
+		em.insert(ei2);
 		Object[] objs=em.findAllOneColumn("key1", CqlBuilder.select(IndexTestModelIndex.class).field("searchText").eq("great"));
 		assertNotNull(objs);
 		List<IndexTestModel>es=em.findAll(CqlBuilder.select(IndexTestModel.class).field("key1").in(objs).orderBy("key2", false).limit(10));
 		assertNotNull(es);
 		assertTrue(es.size()==2);
 		assertTrue("Value got:"+es.get(0).key2, es.get(0).key2.equals("aaa"));
+		em.delete(ei1);
+		em.delete(ei2);
+		em.delete(e3);
+		em.delete(e2);
+		em.delete(e1);
 	}
 
-
-
-
+	@Test
+	public void testExtTableIndexSet() {
+		IndexTestModel e1=new IndexTestModel();
+		e1.key1="5";
+		e1.key2="bbb";
+		e1.someData="SomeData";
+		em.insert(e1);
+		IndexTestModel e2=new IndexTestModel();
+		e2.key1="3";
+		e2.key2="aaa";
+		e2.someData="SomeData";
+		em.insert(e2);
+		IndexTestModel e3=new IndexTestModel();
+		e3.key1="4";
+		e3.key2="ccc";
+		e3.someData="SomeData";
+		em.insert(e3);
+		IndexTestModelIndex ei1=new IndexTestModelIndex();
+		ei1.searchText="great";
+		ei1.key1=e1.key1;
+		em.insert(ei1);
+		IndexTestModelIndex ei2=new IndexTestModelIndex();
+		ei2.searchText="great";
+		ei2.key1=e2.key1;
+		em.insert(ei2);
+		Set<Object> objSet=new HashSet<Object>();
+		em.findAllOneColumn(objSet, "key1", CqlBuilder.select(IndexTestModelIndex.class).field("searchText").eq("great"));
+		assertNotNull(objSet);
+		List<IndexTestModel>es=em.findAll(CqlBuilder.select(IndexTestModel.class).field("key1").in(objSet).orderBy("key2", false).limit(10));
+		assertNotNull(es);
+		assertTrue(es.size()==2);
+		assertTrue("Value got:"+es.get(0).key2, es.get(0).key2.equals("aaa"));
+		em.delete(ei1);
+		em.delete(ei2);
+		em.delete(e3);
+		em.delete(e2);
+		em.delete(e1);
+	}
 
 }
