@@ -3,6 +3,7 @@ org\w3cloud\jom\testmodels\TestModel1.class
 org\w3cloud\jom\testmodels\OrderItemEnc.class
 org\w3cloud\jom\testmodels\OptionResponse.class
 org\w3cloud\jom\testmodels\CustOrder$STATUS.class
+models\AuditLog2.class
 org\w3cloud\jom\testmodels\OrderItem.class
 org\w3cloud\jom\testmodels\AllTypesModel.class
 org\w3cloud\jom\datastax\CqlEmTest$1.class
@@ -33,4 +34,5 @@ org\w3cloud\jom\testmodels\AuditLog.class
 org\w3cloud\jom\testmodels\CustOrderEnc.class
 org\w3cloud\jom\testmodels\DateWithTimeZoneEnc.class
 org\w3cloud\jom\testmodels\CustOrder.class
+models\AuditLog2$ACTION.class
 org\w3cloud\jom\testmodels\CustOrderEnc$ORDER_TYPE.class

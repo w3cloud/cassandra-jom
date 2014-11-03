@@ -414,6 +414,8 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 	protected <T>T getEntityFromRow(Class<T> entClass, String prefix, Row row){
 		T entity=null;
 		try{
+			entity=entClass.newInstance();
+
 		Field[] fields=entClass.getDeclaredFields();
 		for(Field field:fields){
 			// if it is a NoSqlTransient field do nothing
@@ -422,19 +424,10 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 				if (field.getAnnotation(CqlEmbed.class)!=null){
 					String cqlFieldName=camelCaseToUnderScore(field.getName());
 					Object embededEntity=getEntityFromRow(field.getType(), cqlFieldName, row);
-					if (embededEntity!=null){
-						if (entity==null){
-							entity=entClass.newInstance();
-						}
-						setField(field, entity, embededEntity);
-					}
 					setField(field, entity, embededEntity);
 				}else {
 					Object value=getFieldFromRow(prefix, field, row);
 					if (value!=null){
-						if (entity==null){
-							entity=entClass.newInstance();
-						}
 						setField(field, entity, value);
 					}
 				}
@@ -443,7 +436,6 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		}
 		catch(Throwable e){
 			throw new RuntimeException("Exceptionin setEntityFromRow", e);
-			
 		}
 		return entity;
 		

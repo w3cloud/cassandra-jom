@@ -381,7 +381,7 @@ public class CqlEmTest {
 		assertTrue(e.id.toString().length()>5);
 		AuditLog al=em.findOne(CqlBuilder.select(AuditLog.class).field("restaurantId").eq(e.restaurantId).field("employeeId").eq(e.employeeId));
 		assertNotNull(al);
-		assertNull(al.createDt);
+		assertNotNull(al.createDt);
 	}
 	public AuditLog createAuditLog(String details) {
 		AuditLog e=new AuditLog();
