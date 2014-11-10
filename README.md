@@ -7,7 +7,6 @@ cassandra-jom
 <li>Support for composite id
 <li>Automatically converts Java camelcasing namings to cql style naming. For example, if you have an entity CarModel, the corresponding table name will be car_model.
 <li>Embed objects within your entity. For example, you can embed Address class inside your User entity.
-<li>Collections can be embeded using CqlStoreAsJson. Example. Order can have a list of orderItems, an item can have a list of options. The orderItems field can be annotated with CqlStoreAsJson and the jom will store the list as json in a text column.
 <li>JPA style annotations. CqlEntity, CqlId, CqlAutoGen, CqlEmbed, CqlStoreAsJson
 <li>Cassandra has very limited quering capabilities. Jom gets round the limilitation by implementing filter feature. 
 <li>In cassandra, it is efficient to update just the modified fileds. Coloumn level updates can be done, using updateColoumn method.
