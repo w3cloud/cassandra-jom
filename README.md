@@ -104,4 +104,8 @@ Insert, update and find your entity
 <li> Do not use CqlIndex. Cassandra encourages to use link table for queries instead of indexing a column.
 <li> Avoid using the keyspace parameter of CqlEntity. 
 </ul>
-<h5>If you like or use my cassandra-jom, please star and watch this page.</h5>
+<h5>Contribute</h5>
+<ul>
+<li>If you like or use my cassandra-jom, please star and watch this page.
+<li>Please post your comments on my cassandra-jom blog page: http://www.w3cloud.org/cassandra-jom
+</ul>
