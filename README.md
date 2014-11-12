@@ -11,6 +11,7 @@ cassandra-jom
 <li>Cassandra has very limited quering capabilities. Jom gets round the limilitation by implementing filter feature. 
 <li>In cassandra, it is efficient to update just the modified fileds. Coloumn level updates can be done, using updateColoumn method.
 <li>Cassandra light weight transaction support. Inserts, updates and deletes can be done in batches.
+<li>Counter column support with @CqlColumn(dataType=DataType.COUNTER) annotation on any nemeric fields
 </ul>
 
 <h5>Maven Dependency</h5>
