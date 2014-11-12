@@ -92,10 +92,10 @@ Insert, update and find your entity
 			
 
 </pre>
-<p>For more complex usage, look into my testcases</p>
+<p>For more complex usage, look into testcases</p>
 <h5>Upcoming release</h5>
 <ul>
-<li> With 1.2.9, I am freezing the interface. If you use a prior versions, please upgrade to 1.2.9 or later.
+<li> With 1.2.9, freezing the interface. If you use a prior versions, please upgrade to 1.2.9 or later.
 <li> No planned release. 
 </ul>
 <h5>Caution</h5>
@@ -106,6 +106,6 @@ Insert, update and find your entity
 </ul>
 <h5>Contribute</h5>
 <ul>
-<li>If you like or use my cassandra-jom, please star and watch this page.
-<li>Please post your comments on my cassandra-jom blog page: http://www.w3cloud.org/cassandra-jom
+<li>If you like or use cassandra-jom, please star and watch this page.
+<li>Please post your comments on our cassandra-jom blog page: http://www.w3cloud.org/cassandra-jom
 </ul>
