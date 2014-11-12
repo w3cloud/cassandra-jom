@@ -2,7 +2,7 @@ cassandra-jom
 =============
 <ul>
 <li>An easy to use java object mapper, built around DataStax's Java CQL driver.
-<li>It can automatically create tables/indexes and add columns from your cql annotated domain objects.
+<li>It can automatically create tables and add columns from your cql annotated domain objects.
 <li>jom can autogenerate UUID
 <li>Support for composite id
 <li>Automatically converts Java camelcasing namings to cql style naming. For example, if you have an entity CarModel, the corresponding table name will be car_model.
