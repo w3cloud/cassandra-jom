@@ -17,7 +17,7 @@ cassandra-jom
     <dependency>
       <groupId>org.w3cloud.api</groupId>
       <artifactId>cassandra-jom</artifactId>
-      <version>1.2.7</version>
+      <version>1.2.8</version>
     </dependency>
     
     If cassandra-jom is not resolved, add sonatype repo to your pom.xml
