@@ -283,7 +283,8 @@ public class CqlScriptGenDataStax implements CqlScriptGen{
 		Set<Class<?>> entityClasses= reflections.getTypesAnnotatedWith(CqlEntity.class);
 		for(Class<?>entityClass:entityClasses){
 			CqlEntity cqlEntity=entityClass.getAnnotation(CqlEntity.class);
-			if (cqlEntity.keyspace().equalsIgnoreCase(session.getLoggedKeyspace())){
+			if ((cqlEntity.keyspace().equals(""))  || (cqlEntity.keyspace().equalsIgnoreCase(session.getLoggedKeyspace()))){
+				//unspecified or the specfied keyspace matches with the logged in keyspace
 				syncModel(session, entityClass);
 			}
 		}

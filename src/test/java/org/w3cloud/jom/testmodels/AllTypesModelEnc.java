@@ -9,7 +9,7 @@ import org.w3cloud.jom.annotations.CqlEntity;
 import org.w3cloud.jom.annotations.CqlId;
 import org.w3cloud.jom.annotations.CqlId.IdType;
 
-@CqlEntity(keyspace="jom_test")
+@CqlEntity
 public class AllTypesModelEnc {
 	@CqlId(idType=IdType.PARTITION_KEY)
 	@CqlAutoGen

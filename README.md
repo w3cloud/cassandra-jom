@@ -18,7 +18,7 @@ cassandra-jom
     <dependency>
       <groupId>org.w3cloud.api</groupId>
       <artifactId>cassandra-jom</artifactId>
-      <version>1.2.8</version>
+      <version>1.2.9</version>
     </dependency>
     
     If cassandra-jom is not resolved, add sonatype repo to your pom.xml
@@ -94,7 +94,7 @@ Insert, update and find your entity
 <p>For more complex usage, look into my testcases</p>
 <h5>Upcoming release</h5>
 <ul>
-<li> With 1.2.8, I am freezing the interface.
+<li> With 1.2.9, I am freezing the interface. If you use a prior versions, please upgrade to 1.2.9 or later.
 <li> No planned release. 
 </ul>
 <h5>Caution</h5>

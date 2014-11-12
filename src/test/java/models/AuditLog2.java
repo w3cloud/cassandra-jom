@@ -12,7 +12,7 @@ import org.w3cloud.jom.testmodels.DateWithTimeZone;
 
 
 
-@CqlEntity(keyspace="jom_test")
+@CqlEntity
 public class AuditLog2 {
 	public static class ACTION{
 		public static String VOIDED_ORDER="Voided Order";

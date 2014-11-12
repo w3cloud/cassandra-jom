@@ -6,7 +6,7 @@ import org.w3cloud.jom.annotations.CqlEntity;
 import org.w3cloud.jom.annotations.CqlId;
 import org.w3cloud.jom.annotations.CqlId.IdType;
 
-@CqlEntity(keyspace="jom_test")
+@CqlEntity
 public class OrderByTestModel {
 	@CqlId(idType=IdType.PARTITION_KEY)
 	public String key1;
