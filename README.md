@@ -3,13 +3,14 @@ cassandra-jom
 <ul>
 <li>An easy to use java object mapper, built around DataStax's Java CQL driver.
 <li>It can automatically create tables and add columns from your cql annotated domain objects.
-<li>jom can autogenerate UUID
-<li>Support for composite id
-<li>Automatically converts Java camelcasing namings to cql style naming. For example, if you have an entity CarModel, the corresponding table name will be car_model.
+<li>jom can auto-generate UUID
+<li>Composite keys are well supported. Keys can be designated as either partition key or cluster keys, using the CqlId annotation.
+<li>Automatically converts Java camel-casing namings to cql style naming. For example, if you have an entity CarModel, the corresponding table name will be car_model.
 <li>Embed objects within your entity. For example, you can embed Address class inside your User entity.
 <li>JPA style annotations. CqlEntity, CqlId, CqlAutoGen, CqlEmbed, CqlStoreAsJson
 <li>Cassandra has very limited quering capabilities. Jom gets round the limilitation by implementing filter feature. 
 <li>In cassandra, it is efficient to update just the modified fileds. Coloumn level updates can be done, using updateColoumn method.
+<li>Cassandra light weight transaction support. Inserts, updates and deletes can be done in batches.
 </ul>
 
 <h5>Maven Dependency</h5>
@@ -93,6 +94,11 @@ Insert, update and find your entity
 <p>For more complex usage, look into my testcases</p>
 <h5>Upcoming release</h5>
 <ul>
-<li> The interfaces are some what stable. Still, my project that uses this JOM is under development. Besides, everyday I am learning something new with cassandra. I anticipate few interfaces changes until everything settles down. 
+<li> With 1.2.8, I am freezing the interface.
 <li> No planned release. 
+</ul>
+<h5>Caution</h5>
+<ul>
+<li> CqlStoreAsJson annotation does not work will with Lists. Do  your own serilization and de-seriazation, if needed with gson. Serilization is straight-forward. For de-serialization, use the following technique: <pre>order.orderItems=gson.fromJson(order.orderItemsJson,new TypeToken&lt;List&lt;OrderItem&gt;&gt;(){}.getType());</pre>
+<li> Do not use CqlIndex. Cassandra encourages to use link table for queries instead of indexing a column.
 </ul>
