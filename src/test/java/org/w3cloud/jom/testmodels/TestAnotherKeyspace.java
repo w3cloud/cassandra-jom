@@ -4,21 +4,15 @@ package org.w3cloud.jom.testmodels;
 
 import java.util.UUID;
 
+import org.w3cloud.jom.annotations.CqlAutoGen;
 import org.w3cloud.jom.annotations.CqlEntity;
 import org.w3cloud.jom.annotations.CqlId;
 import org.w3cloud.jom.annotations.CqlId.IdType;
 
-@CqlEntity(keyspace="jom_test")
-public class TestModel1Enc {
+@CqlEntity(keyspace="jom_test2")
+public class TestAnotherKeyspace {
 	@CqlId(idType=IdType.PARTITION_KEY)
-	private UUID id;
-
-	public UUID getId() {
-		return id;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
-	}
+	@CqlAutoGen
+	public UUID id;
 
 }

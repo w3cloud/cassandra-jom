@@ -10,7 +10,7 @@ import org.w3cloud.jom.annotations.CqlId;
 import org.w3cloud.jom.annotations.CqlStoreAsJson;
 import org.w3cloud.jom.annotations.CqlId.IdType;
 
-@CqlEntity
+@CqlEntity(keyspace="jom_test")
 public class StoreAsJsonTestEnc {
 	@CqlId(idType=IdType.PARTITION_KEY)
 	private UUID restaurantId;

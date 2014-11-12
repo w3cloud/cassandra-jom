@@ -34,8 +34,12 @@ import org.w3cloud.jom.testmodels.OptionResponseEnc;
 import org.w3cloud.jom.testmodels.OrderByTestModel;
 import org.w3cloud.jom.testmodels.StoreAsJsonTest;
 import org.w3cloud.jom.testmodels.StoreAsJsonTestEnc;
+import org.w3cloud.jom.testmodels.TestAnotherKeyspace;
+import org.w3cloud.jom.testmodels.TestModel1;
+import org.w3cloud.jom.testmodels.TestModel2;
 import org.w3cloud.jom.util.UUIDUtil;
 
+import com.datastax.driver.core.BatchStatement;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
@@ -44,7 +48,7 @@ import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.google.gson.Gson;
 
 public class CqlEmTest {
-	private  static CqlEntityManager em;
+	private  static CqlEntityManager em; //jom_test keyspace
 	@BeforeClass
 	public static void setUp() {
 		
@@ -56,6 +60,9 @@ public class CqlEmTest {
 			Session session=cluster.connect();
 			session.execute("CREATE KEYSPACE jom_test WITH replication " + 
 					"= {'class':'SimpleStrategy', 'replication_factor':1};");
+			session.execute("CREATE KEYSPACE jom_test2 WITH replication " + 
+					"= {'class':'SimpleStrategy', 'replication_factor':1};");
+
 			session=cluster.connect("jom_test");
 			Properties props=new Properties();
 			props.put("cql.contactpoints", "127.0.0.1");
@@ -83,6 +90,7 @@ public class CqlEmTest {
 					.build();
 			Session session=cluster.connect();
 			session.execute("DROP KEYSPACE jom_test");
+			session.execute("DROP KEYSPACE jom_test2");
 		}finally{
 			if (cluster!=null)
 				cluster.close();
@@ -594,6 +602,40 @@ public class CqlEmTest {
 		em.delete(e3);
 		em.delete(e2);
 		em.delete(e1);
+	}
+	@Test
+	public void testAnotherKeyspace() {
+		Properties props=new Properties();
+		props.put("cql.contactpoints", "127.0.0.1");
+		props.put("cql.keyspace","jom_test2");
+		props.put("cql.synctableschema", "true");
+		props.put("cql.packagestoscan", "org.w3cloud.jom.testmodels");
+		CqlEntityManager jomTest2em=CqlEntityManagerFactory.createEntityManger(props);
+		TestAnotherKeyspace e=new TestAnotherKeyspace();
+		jomTest2em.insert(e);
+		TestAnotherKeyspace e2=jomTest2em.findOne(CqlBuilder.select(TestAnotherKeyspace.class).field("id").eq(e.id));
+		assertNotNull(e2);
+	}
+	@Test
+	public void testBatchUpdate() {
+		BatchStatement batch=new BatchStatement();
+		
+		TestModel1 e1=new TestModel1();
+		e1.name="test1";
+		em.insert(batch, e1);
+		TestModel2 e2=new TestModel2();
+		e2.name="test2";
+		em.insert(batch, e2);
+		em.execute(batch);
+		TestModel1 e1Copy=em.findOne(CqlBuilder.select(TestModel1.class).field("id").eq(e1.id));
+		assertNotNull(e1Copy);
+		assertTrue(e1Copy.name.equals(e1.name));
+
+		TestModel2 e2Copy=em.findOne(CqlBuilder.select(TestModel2.class).field("id").eq(e2.id));
+		assertNotNull(e2Copy);
+		assertTrue(e2Copy.name.equals(e2.name));
+
+		
 	}
 
 }

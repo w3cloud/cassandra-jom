@@ -77,6 +77,7 @@ public class CqlStatement<T> {
 		return entityClass;
 	}
 	protected int limit=0;//no limit
+	protected int ttl=0; //Time to live in seconds
 	protected boolean allowFiltering=false;
 	protected String orderBy=null;
 	protected boolean orderByDesc=true;
@@ -103,6 +104,12 @@ public class CqlStatement<T> {
 		limit=n;
 		return this;
 	}
+	public CqlStatement<T> ttl(int secs){
+		ttl=secs;
+		return this;
+	}
+
+	
 	public CqlStatement<T> allowFiltering(){
 		allowFiltering=true;
 		return this;
@@ -226,6 +233,11 @@ public class CqlStatement<T> {
 	public String buildUpdateCql(StringBuilder cql, List<Object>params) {
 		cql.append("UPDATE ");
 		cql.append(camelCaseToUnderScore(entityClass.getSimpleName()));
+		if (ttl>0){
+			cql.append(" USING TTL ");
+			cql.append(ttl);
+			cql.append(" ");
+		}
 		buildSetList(cql, params);
 		return cql.toString();
 	}

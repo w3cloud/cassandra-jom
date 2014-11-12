@@ -12,7 +12,7 @@ import org.w3cloud.jom.annotations.CqlId;
 import org.w3cloud.jom.annotations.CqlStoreAsJson;
 import org.w3cloud.jom.annotations.CqlId.IdType;
 
-@CqlEntity
+@CqlEntity(keyspace="jom_test")
 public class CustOrder {
 	public static class ORDER_TYPE{
 		public static String PICKUP="Pickup";

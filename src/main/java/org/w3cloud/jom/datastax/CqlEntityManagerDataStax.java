@@ -22,6 +22,7 @@ import org.w3cloud.jom.annotations.CqlStoreAsJson;
 import org.w3cloud.jom.annotations.CqlTransient;
 import org.w3cloud.jom.util.UUIDUtil;
 
+import com.datastax.driver.core.BatchStatement;
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PreparedStatement;
@@ -208,7 +209,7 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		cql.append("VALUES (");
 		buildPlaceHolders(fields, cql);
 		cql.setLength(cql.length()-1); //Trim the last ", "
-		cql.append(") IF NOT EXISTS; ");
+		cql.append(") ; ");
 		return cql.toString();
 	}
 	protected String buildUpdateCql(Class<?> modelClass){
@@ -277,14 +278,7 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 	
 	@Override
 	public void insert(Object entity) {
-		String insertCql=buildInsertCql(entity.getClass());
-		PreparedStatement statement = session.prepare(insertCql);
-		BoundStatement boundStatement = new BoundStatement(statement);
-		List<Object> objList=new ArrayList<Object>();
-		autoGenUUID(entity);
-		bindFields(entity.getClass().getDeclaredFields(), entity, objList, BindOption.allFields);
-		boundStatement.bind(objList.toArray());
-		session.execute(boundStatement);
+		insert(null, entity);
 	}
 	
 	protected void setField(Field field, Object entity, Object 
@@ -340,31 +334,11 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 	}
 	@Override
 	public void update(Object entity) {
-		String updateCql=buildUpdateCql(entity.getClass());
-		PreparedStatement statement = session.prepare(updateCql);
-		BoundStatement boundStatement = new BoundStatement(statement);
-		List<Object> objList=new ArrayList<Object>();
-		Field[] fields=entity.getClass().getDeclaredFields();
- 		bindFields(fields, entity, objList, BindOption.exceptIdFields);
- 		bindFields(fields,entity, objList, BindOption.onlyIdFields);
-		boundStatement.bind(objList.toArray());
-		session.execute(boundStatement);
-		
+		update(null, entity);
 	}
 	@Override
 	public <T> void updateColumn(T entity, CqlStatement<T> cqlStatement) {
-		StringBuilder cql=new StringBuilder();
-		List<Object>bindParams=new ArrayList<Object>();
-		cqlStatement.buildUpdateCql(cql, bindParams);
-		cql.append(" WHERE ");
-		Field[] fields=entity.getClass().getDeclaredFields();
-		buildUpdateWhereList(fields, cql);
-		cql.setLength(cql.length()-4); //Trim the last ","
- 		bindFields(fields,entity, bindParams, BindOption.onlyIdFields);
-		PreparedStatement statement = session.prepare(cql.toString());
-		BoundStatement boundStatement = new BoundStatement(statement);
-		boundStatement.bind(bindParams.toArray());
-		session.execute(boundStatement);
+		updateColumn(null, entity, cqlStatement);
 	}
 
 	protected String buildSelectCql(Class<?> modelClass){
@@ -488,23 +462,11 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 	}
 	@Override
 	public void delete(Object entity) {
-		String deleteCql=buildDeleteCql(entity.getClass());
-		Field[] fields=entity.getClass().getDeclaredFields();
-		List<Object> bindParams=new ArrayList<Object>();
- 		bindFields(fields,entity, bindParams, BindOption.onlyIdFields);
-		PreparedStatement statement = session.prepare(deleteCql);
-		BoundStatement boundStatement = new BoundStatement(statement);
-		boundStatement.bind(bindParams.toArray());
-		session.execute(boundStatement);
+		delete(null, entity);
 	}
 	@Override
 	public <T> void deleteByKey(Class<T> entityClass, Object... keys) {
-		String deleteCql=buildDeleteCql(entityClass);
-		PreparedStatement statement = session.prepare(deleteCql);
-		BoundStatement boundStatement = new BoundStatement(statement);
-		boundStatement.bind(keys);
-		session.execute(boundStatement);
-		
+		deleteByKey(null, entityClass, keys);
 	}
 	@Override
 	public <T> long count(CqlStatement<T> cqlStatement) {
@@ -574,6 +536,93 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 			}
 		}
 		
+	}
+	@Override
+	public void insert(BatchStatement batchStatement, Object entity) {
+		String insertCql=buildInsertCql(entity.getClass());
+		PreparedStatement statement = session.prepare(insertCql);
+		BoundStatement boundStatement = new BoundStatement(statement);
+		List<Object> objList=new ArrayList<Object>();
+		autoGenUUID(entity);
+		bindFields(entity.getClass().getDeclaredFields(), entity, objList, BindOption.allFields);
+		boundStatement.bind(objList.toArray());
+		if (batchStatement==null){//execute immediately
+			session.execute(boundStatement);
+		}else{
+			batchStatement.add(boundStatement);
+		}
+		
+	}
+	@Override
+	public void update(BatchStatement batchStatement, Object entity) {
+		String updateCql=buildUpdateCql(entity.getClass());
+		PreparedStatement statement = session.prepare(updateCql);
+		BoundStatement boundStatement = new BoundStatement(statement);
+		List<Object> objList=new ArrayList<Object>();
+		Field[] fields=entity.getClass().getDeclaredFields();
+ 		bindFields(fields, entity, objList, BindOption.exceptIdFields);
+ 		bindFields(fields,entity, objList, BindOption.onlyIdFields);
+		boundStatement.bind(objList.toArray());
+		if (batchStatement==null){//execute immediately
+			session.execute(boundStatement);
+		}else{
+			batchStatement.add(boundStatement);
+		}		
+	}
+	@Override
+	public <T> void updateColumn(BatchStatement batchStatement, T entity,
+			CqlStatement<T> cqlStatement) {
+		StringBuilder cql=new StringBuilder();
+		List<Object>bindParams=new ArrayList<Object>();
+		cqlStatement.buildUpdateCql(cql, bindParams);
+		cql.append(" WHERE ");
+		Field[] fields=entity.getClass().getDeclaredFields();
+		buildUpdateWhereList(fields, cql);
+		cql.setLength(cql.length()-4); //Trim the last ","
+ 		bindFields(fields,entity, bindParams, BindOption.onlyIdFields);
+		PreparedStatement statement = session.prepare(cql.toString());
+		BoundStatement boundStatement = new BoundStatement(statement);
+		boundStatement.bind(bindParams.toArray());
+		if (batchStatement==null){//execute immediately
+			session.execute(boundStatement);
+		}else{
+			batchStatement.add(boundStatement);
+		}		
+	}
+	@Override
+	public void delete(BatchStatement batchStatement, Object entity) {
+		String deleteCql=buildDeleteCql(entity.getClass());
+		Field[] fields=entity.getClass().getDeclaredFields();
+		List<Object> bindParams=new ArrayList<Object>();
+ 		bindFields(fields,entity, bindParams, BindOption.onlyIdFields);
+		PreparedStatement statement = session.prepare(deleteCql);
+		BoundStatement boundStatement = new BoundStatement(statement);
+		boundStatement.bind(bindParams.toArray());
+		if (batchStatement==null){//execute immediately
+			session.execute(boundStatement);
+		}else{
+			batchStatement.add(boundStatement);
+		}		
+	}
+	@Override
+	public <T> void deleteByKey(BatchStatement batchStatement,
+			Class<T> entityClass, Object... keys) {
+		// TODO Auto-generated method stub
+		String deleteCql=buildDeleteCql(entityClass);
+		PreparedStatement statement = session.prepare(deleteCql);
+		BoundStatement boundStatement = new BoundStatement(statement);
+		boundStatement.bind(keys);
+		if (batchStatement==null){//execute immediately
+			session.execute(boundStatement);
+		}else{
+			batchStatement.add(boundStatement);
+		}		
+		
+		
+	}
+	@Override
+	public void execute(BatchStatement batchStatement) {
+		session.execute(batchStatement);
 	}
 
 }

@@ -282,7 +282,10 @@ public class CqlScriptGenDataStax implements CqlScriptGen{
 		Reflections reflections = new Reflections(packageName);
 		Set<Class<?>> entityClasses= reflections.getTypesAnnotatedWith(CqlEntity.class);
 		for(Class<?>entityClass:entityClasses){
-			syncModel(session, entityClass);
+			CqlEntity cqlEntity=entityClass.getAnnotation(CqlEntity.class);
+			if (cqlEntity.keyspace().equalsIgnoreCase(session.getLoggedKeyspace())){
+				syncModel(session, entityClass);
+			}
 		}
 	}
 }

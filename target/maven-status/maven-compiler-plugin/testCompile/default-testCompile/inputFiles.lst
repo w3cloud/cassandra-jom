@@ -1,4 +1,5 @@
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\models\AuditLog2.java
+C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\TestAnotherKeyspace.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\CqlStatementTest.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\OrderItem.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\StoreAsJsonTestEnc.java
@@ -23,6 +24,7 @@ C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\or
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\datastax\NoCqlTest.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\AllTypesModel.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\datastax\CqlEmTest.java
+C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\TestModel2.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\CustOrderEnc.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\DateWithTimeZoneEnc.java
 C:\Users\Subha\projects\subha-branch\trunk\GitHub\cassandra-jom\src\test\java\org\w3cloud\jom\testmodels\IndexTestModelIndex.java

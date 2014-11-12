@@ -9,7 +9,7 @@ import org.w3cloud.jom.annotations.CqlId.IdType;
 
 
 
-@CqlEntity
+@CqlEntity(keyspace="jom_test")
 public class AutoGenUuidTest {
 	//Composite key restaurantId and id
 	@CqlId(idType=IdType.PARTITION_KEY)

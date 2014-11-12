@@ -11,7 +11,7 @@ import org.w3cloud.jom.annotations.CqlId.IdType;
 
 
 
-@CqlEntity
+@CqlEntity(keyspace="jom_test")
 public class AuditLogEnc {
 	public static class ACTION{
 		public static String VOIDED_ORDER="Voided Order";
