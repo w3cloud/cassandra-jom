@@ -103,6 +103,7 @@ Insert, update and find your entity
 <li> CqlStoreAsJson annotation does not work well with Lists. Do  your own serilization and de-seriazation, if needed with gson. Serilization is straight-forward. For de-serialization, use the following technique: <pre>order.orderItems=gson.fromJson(order.orderItemsJson,new TypeToken&lt;List&lt;OrderItem&gt;&gt;(){}.getType());</pre>
 <li> Do not use CqlIndex. Cassandra encourages to use link table for queries instead of indexing a column.
 <li> Avoid using the keyspace parameter of CqlEntity. Instead put entities belonging to different keyspaces in  different root packages and have an entity manager for each keyspace.
+<li>jom does not support casssandra datatypes like map, list and set. We feel these datatypes are very complex to work with, when there are other standard alternatives. For example, if you need a user profile property map, you can have separate table user_profile with fields user_id, name, value with user_id as the primary key and name as the clustering key
 </ul>
 <h5>Contribute</h5>
 <ul>
