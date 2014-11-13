@@ -106,8 +106,7 @@ Insert, update and find your entity
 </ul>
 <h5>Contribute</h5>
 <ul>
-<li>If you like or use cassandra-jom, please star and watch this page.
 <li>Please post your comments on our cassandra-jom blog page: http://www.w3cloud.org/cassandra-jom
 <li> Please report bugs, by creating an issue.
-<li> Up my comment in stackoverflow: http://stackoverflow.com/questions/15983190/cassandra-client-java-apis/26166944#26166944
+
 </ul>
