@@ -8,6 +8,7 @@ org\w3cloud\jom\testmodels\OrderItem.class
 org\w3cloud\jom\testmodels\AllTypesModel.class
 org\w3cloud\jom\datastax\CqlEmTest$1.class
 org\w3cloud\jom\testmodels\StoreAsJsonTest.class
+org\w3cloud\jom\testmodels\TestAnotherKeyspace.class
 org\w3cloud\jom\datastax\NoCqlTest.class
 org\w3cloud\jom\testmodels\OptionResponseEnc.class
 org\w3cloud\jom\datastax\CqlEmTest.class
@@ -26,6 +27,7 @@ org\w3cloud\jom\testmodels\CustOrder$PAYMENT_TYPE.class
 org\w3cloud\jom\testmodels\AllTypesModelEnc.class
 org\w3cloud\jom\testmodels\OptionEnc.class
 org\w3cloud\jom\testmodels\Option.class
+org\w3cloud\jom\testmodels\TestModel2.class
 org\w3cloud\jom\testmodels\StoreAsJsonTestEnc.class
 org\w3cloud\jom\testmodels\AuditLogEnc$ACTION.class
 org\w3cloud\jom\testmodels\AutoGenUuidTestEnc.class

@@ -177,16 +177,15 @@ public class CqlStatement<T> {
 	protected void buildSetList(StringBuilder cql, List<Object>params){
 		if (expressions==null)
 			throw new RuntimeException("No expressions. Use field().eq(v) syntax or set to add expressions");
+		cql.append(" SET ");
 		for(Expression expr:expressions){
 			if (expr.operation.equals(Expression.TYPE_SET)){
-				cql.append(" SET ");
 				cql.append(camelCaseToUnderScore(expr.fieldName));
 				cql.append(" = ");
 				cql.append(" ? ");
 				cql.append(", ");
 				params.add(expr.value);
 			} else if (expr.operation.equals(Expression.TYPE_ADD)){ //Countre coloumn
-				cql.append(" SET ");
 				String cqlName=camelCaseToUnderScore(expr.fieldName); 
 				cql.append(cqlName);
 				cql.append(" = ");
