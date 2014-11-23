@@ -5,11 +5,11 @@ cassandra-jom
 <li>It can automatically create tables and add columns from your cql annotated domain objects.
 <li>jom can auto-generate UUID
 <li>Composite keys are well supported. Keys can be designated as either partition key or cluster keys, using the CqlId annotation.
-<li>Automatically converts Java camel-casing namings to cql style naming. For example, if you have an entity CarModel, the corresponding table name will be car_model.
+<li>Automatically converts Java camel-casing naming to cql style naming. For example, if you have an entity CarModel, the corresponding table name will be car_model.
 <li>Embed objects within your entity. For example, you can embed Address object inside your User entity.
 <li>JPA style annotations. CqlEntity, CqlId, CqlAutoGen, CqlEmbed, CqlStoreAsJson
-<li>Cassandra has very limited quering capabilities. Jom gets round the limilitation by implementing filter feature. 
-<li>In cassandra, it is efficient to update just the modified fileds. Coloumn level updates can be done, using updateColoumn method.
+<li>Cassandra has very limited querying capabilities. Jom gets round the limitation by implementing filter feature. 
+<li>In cassandra, it is efficient to update just the modified fields. Column level updates can be done, using updateColumn method.
 <li>Cassandra light weight transaction support. Inserts, updates and deletes can be done in batches.
 <li>Counter column support with @CqlColumn(dataType=DataType.COUNTER) annotation on any nemeric fields
 </ul>
