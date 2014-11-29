@@ -1,14 +1,21 @@
 package org.w3cloud.jom.datastax;
 
 
+import java.io.FileInputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.InetSocketAddress;
+import java.security.KeyStore;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 
 import org.w3cloud.jom.CqlEntityManager;
 import org.w3cloud.jom.CqlFilter;
@@ -25,8 +32,10 @@ import org.w3cloud.jom.util.UUIDUtil;
 import com.datastax.driver.core.BatchStatement;
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Cluster.Builder;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.Row;
+import com.datastax.driver.core.SSLOptions;
 import com.datastax.driver.core.Session;
 import com.google.gson.Gson;
 
@@ -91,6 +100,51 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		return contactPoints;
 		
 	}
+	private SSLContext getSSLContext(String truststorePath, 
+			String truststorePassword,
+			String keystorePath, 
+			String keystorePassword)
+	{
+		SSLContext ctx=null;
+		try{
+			FileInputStream tsf = new FileInputStream(truststorePath);
+			FileInputStream ksf = new FileInputStream(keystorePath);
+			ctx = SSLContext.getInstance("SSL");
+
+			KeyStore ts = KeyStore.getInstance("JKS");
+			ts.load(tsf, truststorePassword.toCharArray());
+			TrustManagerFactory tmf = 
+					TrustManagerFactory.getInstance(
+							TrustManagerFactory.getDefaultAlgorithm());
+			tmf.init(ts);
+
+			KeyStore ks = KeyStore.getInstance("JKS");
+			ks.load(ksf, keystorePassword.toCharArray());
+			KeyManagerFactory kmf = 
+					KeyManagerFactory.getInstance(
+							KeyManagerFactory.getDefaultAlgorithm());
+			kmf.init(ks, keystorePassword.toCharArray());
+
+			ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), new SecureRandom());
+		}catch (Throwable ex){
+			throw new RuntimeException("Exception in getSSLContext", ex);
+		}
+		return ctx;
+	}
+	private SSLOptions buildSslOptions(Properties props){
+		String truststorePath=getStrProp(props, "cql.ssl.truststorePath");
+		String truststorePassword=getStrProp(props, "cql.ssl.truststorePassword");
+		String keystorePath=getStrProp(props, "cql.ssl.keystorePath");
+		String keystorePassword=getStrProp(props, "cql.ssl.keystorePassword");
+        // Default cipher suites supported by C*
+        String[] cipherSuites = { "TLS_RSA_WITH_AES_128_CBC_SHA", 
+                                  "TLS_RSA_WITH_AES_256_CBC_SHA" };
+        SSLContext context = getSSLContext(truststorePath, 
+                truststorePassword, 
+                keystorePath, 
+                keystorePassword);
+        return new SSLOptions(context, cipherSuites);
+	}
 	/**
 	 * Builds the datastax session
 	 * Properties used: cql.clustername, cql.contactpoint,
@@ -104,10 +158,24 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 		List<InetSocketAddress>contactPoints=parseContactPoints(contactPointsStr);
 		
 		String keySpace=getStrProp(props, "cql.keyspace");
+		Builder builder= Cluster.builder();
+		builder.addContactPointsWithPorts(contactPoints);
+		String username=props.getProperty("cql.credentials.username");
+		if (username!=null){
+			String password=props.getProperty("cql.credentials.password");
+			builder.withCredentials(username, password);
+		}
+		String clusterName=props.getProperty("cql.clustername");
+		if (clusterName!=null){
+			builder.withClusterName(clusterName);
+		}
+		String ssl=props.getProperty("cql.ssl");
+		if ( (ssl!=null) && (ssl.equals("true"))){
+			SSLOptions sslOptions=buildSslOptions(props);
+			builder.withSSL(sslOptions);
+		}
 		
-		Cluster cluster = Cluster.builder()
-				.addContactPointsWithPorts(contactPoints)
-                .build();
+		Cluster cluster=builder.build();
 		Session session=cluster.connect(keySpace);
 		return session;
 	}

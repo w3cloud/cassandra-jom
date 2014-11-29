@@ -19,7 +19,7 @@ cassandra-jom
     <dependency>
       <groupId>org.w3cloud.api</groupId>
       <artifactId>cassandra-jom</artifactId>
-      <version>1.2.10</version>
+      <version>1.2.11</version>
     </dependency>
 
 <h5>Your entity object<h5>
