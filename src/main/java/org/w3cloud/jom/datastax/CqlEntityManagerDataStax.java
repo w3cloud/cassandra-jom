@@ -174,7 +174,6 @@ public class CqlEntityManagerDataStax implements CqlEntityManager{
 			SSLOptions sslOptions=buildSslOptions(props);
 			builder.withSSL(sslOptions);
 		}
-		
 		Cluster cluster=builder.build();
 		Session session=cluster.connect(keySpace);
 		return session;
