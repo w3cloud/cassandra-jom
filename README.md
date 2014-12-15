@@ -85,7 +85,7 @@ Insert, update and find your entity
 <p>For more complex usage, look into testcases</p>
 <h5>Upcoming release</h5>
 <ul>
-<li> With 1.2.9, freezing the interface. If you use a prior versions, please upgrade to 1.2.9 or later.
+<li> Release 1.3.2 is a stable release. My project that used cassandra jom went live and communicates to a 3 node Datastax Enterprise cassandra cluster, using SSL.
 <li> No planned release. 
 </ul>
 <h5>Caution</h5>
