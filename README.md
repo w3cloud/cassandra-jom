@@ -12,7 +12,7 @@ cassandra-jom
 <li>In cassandra, it is efficient to update just the modified fields. Column level updates can be done, using updateColumn method.
 <li>Cassandra light weight transaction support. Inserts, updates and deletes can be done in batches.
 <li>Counter column support with @CqlColumn(dataType=DataType.COUNTER) annotation on any nemeric fields
-<li> Release 1.3.2 is a stable release. My project that uses cassandra jom is live and communicates to a 3 node Datastax Enterprise cassandra cluster, using SSL.
+<li> Release 1.3.2 is a stable release. The project that uses cassandra jom is live and communicates to a 3 node Datastax Enterprise cassandra cluster, using SSL.
 </ul>
 
 <h5>Maven Dependency</h5>
