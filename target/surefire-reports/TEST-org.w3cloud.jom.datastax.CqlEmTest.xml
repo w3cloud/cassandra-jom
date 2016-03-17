@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="18.736" errors="0" skipped="0" tests="23" name="org.w3cloud.jom.datastax.CqlEmTest">
+<testsuite failures="0" time="19.277" errors="0" skipped="0" tests="23" name="org.w3cloud.jom.datastax.CqlEmTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.7.0_71\jre\bin"/>
@@ -28,7 +28,7 @@
     <property name="os.name" value="Windows 8.1"/>
     <property name="classworlds.conf" value="C:\Users\Public\apps\apache-maven-3.2.3\bin\..\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk1.7.0_71\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Java\jdk1.7.0_71\bin;C:\Users\Public\apps\scripts;C:\Users\Public\apps\apache-maven-3.2.3\bin;C:\Program Files\DataStax Community\apache-cassandra\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Bazaar;C:\Users\Public\apps\activator-1.2.3-minimal;;C:\Program Files (x86)\GNU\GnuPG\pub;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.7.0_71\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Java\jdk1.7.0_71\bin;C:\Users\Public\apps\scripts;C:\Users\Public\apps\apache-maven-3.2.3\bin;C:\Program Files\DataStax Community\apache-cassandra\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Bazaar;C:\Users\Public\apps\activator-1.2.3-minimal;C:\Program Files (x86)\GNU\GnuPG\pub;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Users\Subha\AppData\Roaming\npm;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="51.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -43,13 +43,13 @@
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Program Files\Java\jdk1.7.0_71\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean package"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher package"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
     <property name="java.vm.info" value="mixed mode"/>
     <property name="java.version" value="1.7.0_71"/>
-    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.7.0_71\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.7.0_71\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
     <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.7.0_71\jre\lib\resources.jar;C:\Program Files\Java\jdk1.7.0_71\jre\lib\rt.jar;C:\Program Files\Java\jdk1.7.0_71\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.7.0_71\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.7.0_71\jre\lib\jce.jar;C:\Program Files\Java\jdk1.7.0_71\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.7.0_71\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.7.0_71\jre\classes"/>
     <property name="java.vendor" value="Oracle Corporation"/>
     <property name="maven.home" value="C:\Users\Public\apps\apache-maven-3.2.3\bin\.."/>
@@ -60,27 +60,27 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="0.063" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindAllWithFilter"/>
-  <testcase time="0.015" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testDeleteByKey"/>
-  <testcase time="0.016" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testOrderBy"/>
-  <testcase time="0" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIfTableExists"/>
-  <testcase time="0.031" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testExtTableIndex"/>
-  <testcase time="0.109" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdateEnc1"/>
-  <testcase time="0.016" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStoreAsJsonShouldAllowNulls"/>
-  <testcase time="0.031" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testBatchUpdate"/>
+  <testcase time="0.088" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindAllWithFilter"/>
+  <testcase time="0.011" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testDeleteByKey"/>
+  <testcase time="0.011" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testOrderBy"/>
+  <testcase time="0.003" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIfTableExists"/>
+  <testcase time="0.028" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testExtTableIndex"/>
+  <testcase time="0.088" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdateEnc1"/>
+  <testcase time="0.006" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStoreAsJsonShouldAllowNulls"/>
+  <testcase time="0.012" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testBatchUpdate"/>
   <testcase time="0.016" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdate1"/>
-  <testcase time="0.015" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdate2"/>
-  <testcase time="0.016" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementDelete"/>
-  <testcase time="0.015" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementUpdate"/>
-  <testcase time="0.016" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testExtTableIndexSet"/>
-  <testcase time="18.236" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testAnotherKeyspace"/>
-  <testcase time="0.04" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsertEnc1"/>
-  <testcase time="0.007" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsertEnc2"/>
-  <testcase time="0.004" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIfColumnExists"/>
-  <testcase time="0.009" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindAll"/>
-  <testcase time="0.008" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindOne"/>
-  <testcase time="0.008" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIssue1"/>
-  <testcase time="0.009" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert1"/>
-  <testcase time="0.007" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert2"/>
-  <testcase time="0.049" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testCounterTest"/>
+  <testcase time="0.013" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testUpdate2"/>
+  <testcase time="0.013" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementDelete"/>
+  <testcase time="0.009" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementUpdate"/>
+  <testcase time="0.025" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testExtTableIndexSet"/>
+  <testcase time="18.908" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testAnotherKeyspace"/>
+  <testcase time="0.015" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsertEnc1"/>
+  <testcase time="0" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsertEnc2"/>
+  <testcase time="0" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIfColumnExists"/>
+  <testcase time="0" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindAll"/>
+  <testcase time="0.015" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testStatementFindOne"/>
+  <testcase time="0" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testIssue1"/>
+  <testcase time="0.016" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert1"/>
+  <testcase time="0" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testInsert2"/>
+  <testcase time="0" classname="org.w3cloud.jom.datastax.CqlEmTest" name="testCounterTest"/>
 </testsuite>
