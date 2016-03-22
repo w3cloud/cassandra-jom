@@ -84,7 +84,7 @@ Insert, update and find your entity
 			
 
 </pre>
-<p>For more complex usage, look into testcases</p>
+<p>For Further deails, refer to project wiki.</p>
 <h5>Upcoming release</h5>
 <ul>
 <li> No planned release. 
