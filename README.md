@@ -16,6 +16,7 @@ cassandra-jom
 </ul>
 
 <h5>Maven Dependency</h5>
+The jar files are published in maven repository. http://mvnrepository.com/artifact/org.w3cloud.api/cassandra-jom/1.3.4
 
     <dependency>
       <groupId>org.w3cloud.api</groupId>
