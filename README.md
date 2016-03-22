@@ -17,6 +17,8 @@ cassandra-jom
 
 <h5>Get Started</h5>
 * Refer to Project Wiki to get started with Cassandra JOM.
+ 
+
 <h5>Maven Dependency</h5>
 The jar files are published in maven repository. http://mvnrepository.com/artifact/org.w3cloud.api/cassandra-jom/1.3.4
 
