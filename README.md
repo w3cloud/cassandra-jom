@@ -16,7 +16,7 @@ cassandra-jom
 </ul>
 
 <h5>Get Started</h5>
-* Refer to Project Wiki to get started with Cassandra JOM.
+* Refer to the Project Wiki to get started with Cassandra JOM.
  
 
 <h5>Maven Dependency</h5>
