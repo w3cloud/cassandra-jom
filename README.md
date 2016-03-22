@@ -15,6 +15,8 @@ cassandra-jom
 <li> Release 1.3.2 is a stable release. The project that uses cassandra jom is live and communicates to a 3 node Datastax Enterprise cassandra cluster, using SSL.
 </ul>
 
+<h5>Get Started</h5>
+* Refer to Project Wiki to get started with Cassandra JOM.
 <h5>Maven Dependency</h5>
 The jar files are published in maven repository. http://mvnrepository.com/artifact/org.w3cloud.api/cassandra-jom/1.3.4
 
